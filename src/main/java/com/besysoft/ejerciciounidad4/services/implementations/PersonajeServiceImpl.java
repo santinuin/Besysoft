@@ -19,6 +19,7 @@ public class PersonajeServiceImpl extends GenericService<Personaje> implements P
 
     @Override
     public Personaje save(Personaje personaje) {
+
         List<Personaje> personajesList = this.repository.findByNombreIgnoreCase(personaje.getNombre());
 
         if (!personajesList.isEmpty()) {
