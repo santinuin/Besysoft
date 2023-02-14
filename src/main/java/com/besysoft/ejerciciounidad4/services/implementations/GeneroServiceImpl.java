@@ -32,8 +32,8 @@ public class GeneroServiceImpl extends GenericService<Genero> implements GeneroS
     }
 
     @Override
-    public List<Pelicula> findByGenero(String nombre) {
-        return this.repository.findPeliculasByGenero(this.repository.findByNombreIgnoreCase(nombre).getId());
+    public List<Pelicula> findPeliculasByGeneroNombre(String nombre) {
+        return this.repository.findByNombreIgnoreCase(nombre).getPeliculas();
     }
 
     @Override

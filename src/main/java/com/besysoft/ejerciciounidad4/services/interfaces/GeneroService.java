@@ -11,7 +11,7 @@ public interface GeneroService {
 
     List<Genero> findAll();
 
-    List<Pelicula> findByGenero(String nombre);
+    List<Pelicula> findPeliculasByGeneroNombre(String nombre);
 
     Genero findById(Long id);
 

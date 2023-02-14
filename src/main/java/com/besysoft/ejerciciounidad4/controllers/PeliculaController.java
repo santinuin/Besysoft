@@ -31,7 +31,7 @@ public class PeliculaController {
                                                   @RequestParam(required = false) String genero) {
 
         if (titulo != null && !titulo.isBlank()) return ResponseEntity.ok(this.peliculaService.findByTitulo(titulo));
-        if (genero != null && !genero.isBlank()) return ResponseEntity.ok(this.generoService.findByGenero(genero));
+        if (genero != null && !genero.isBlank()) return ResponseEntity.ok(this.generoService.findPeliculasByGeneroNombre(genero));
 
         return ResponseEntity.ok(this.peliculaService.findAll());
     }
