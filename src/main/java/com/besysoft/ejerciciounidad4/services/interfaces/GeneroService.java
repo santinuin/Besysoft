@@ -13,5 +13,6 @@ public interface GeneroService {
 
     List<Pelicula> findByGenero(String nombre);
 
-    Genero updateGenero(Long id, Genero genero);
+    Genero findById(Long id);
+
 }

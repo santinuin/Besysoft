@@ -17,6 +17,5 @@ public interface PeliculaService {
 
     List<Pelicula> findByCalificacionBetween(Integer desde, Integer hasta);
 
-    Pelicula updatePelicula(Long id, Pelicula pelicula);
-
+    Pelicula findById(Long id);
 }

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import static com.besysoft.ejerciciounidad4.utilities.Comparator.comparador;
 import static com.besysoft.ejerciciounidad4.utilities.DateFormatter.fechaFormatter;
 
-@Repository
+//@Repository
 public class PeliculaRepositoryImpl extends GenericRepository<Pelicula> implements PeliculaRepository {
 
     public PeliculaRepositoryImpl() {

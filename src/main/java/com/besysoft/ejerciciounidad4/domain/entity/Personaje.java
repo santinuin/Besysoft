@@ -11,7 +11,7 @@ public class Personaje implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false, length = 30)
     private String nombre;
@@ -26,7 +26,7 @@ public class Personaje implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pelicula_id")
-    @JsonIgnoreProperties(value = {"id", "personajes"})
+    @JsonIgnoreProperties(value = {"personajes"})
     private Pelicula pelicula;
 
     public Personaje() {

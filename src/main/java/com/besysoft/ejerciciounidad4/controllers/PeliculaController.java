@@ -112,7 +112,7 @@ public class PeliculaController {
 
         Map<String, Object> response = new HashMap<>();
 
-        if (this.peliculaService.updatePelicula(id, pelicula) == null) {
+        if (this.peliculaService.findById(pelicula.getId()) == null) {
 
             response.put("succes", Boolean.FALSE);
             response.put("mensaje", "Error: no se pudo editar, la película ID: "
@@ -129,7 +129,7 @@ public class PeliculaController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        this.peliculaService.updatePelicula(id, pelicula);
+        this.peliculaService.save(pelicula);
 
         response.put("succes", Boolean.TRUE);
         response.put("mensaje", "¡La pelicula " + pelicula.getTitulo() + " ha sido modificada con éxito!");

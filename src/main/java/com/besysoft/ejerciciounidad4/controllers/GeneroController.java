@@ -59,7 +59,7 @@ public class GeneroController {
 
         Map<String, Object> response = new HashMap<>();
 
-        if (this.service.updateGenero(id, genero) == null) {
+        if (this.service.findById(id) == null) {
 
             response.put("succes", Boolean.FALSE);
             response.put("mensaje", "Error: no se pudo editar, el genero ID: "
@@ -76,7 +76,7 @@ public class GeneroController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        this.service.updateGenero(id, genero);
+        this.service.save(genero);
 
         response.put("succes", Boolean.TRUE);
         response.put("mensaje", "¡El genero " + genero.getNombre() + " ha sido modificado con éxito!");

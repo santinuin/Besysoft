@@ -10,7 +10,7 @@ import java.util.*;
 
 import static com.besysoft.ejerciciounidad4.utilities.DateFormatter.fechaFormatter;
 
-@Repository
+//@Repository
 public class GeneroRepositoryImpl extends GenericRepository<Genero> implements GeneroRepository {
 
     public GeneroRepositoryImpl() {
