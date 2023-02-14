@@ -11,6 +11,6 @@ public interface GeneroRepository extends JpaRepository<Genero, Long> {
 
     Genero findByNombreIgnoreCase(String nombre);
 
-    @Query("select p from peliculas p where p.genero_id = ?1")
+    @Query("select p from Pelicula p where p.genero_id = ?1")
     List<Pelicula> findPeliculasByGenero(Long id);
 }
