@@ -63,7 +63,7 @@ public class PersonajeController {
 
         if (this.service.save(personaje) == null) {
             response.put("succes", Boolean.FALSE);
-            response.put("mensaje", "La pelicula " + personaje.getNombre() + " ya existe");
+            response.put("mensaje", "El personaje " + personaje.getNombre() + " ya existe");
 
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
@@ -80,9 +80,13 @@ public class PersonajeController {
     public ResponseEntity<?> updatePersonaje(@PathVariable Long id,
                                              @RequestBody Personaje personaje) {
 
+        Personaje personajeActual = this.service.findById(id);
+
+        Personaje personajeUpdated = null;
+
         Map<String, Object> response = new HashMap<>();
 
-        if (this.service.updatePersonaje(id, personaje) == null) {
+        if (personajeActual == null) {
 
             response.put("succes", Boolean.FALSE);
             response.put("mensaje", "Error: no se pudo editar, el personaje ID: "
@@ -100,7 +104,15 @@ public class PersonajeController {
 
         }
 
-        this.service.updatePersonaje(id, personaje);
+        personajeActual.setNombre(personaje.getNombre());
+        personajeActual.setEdad(personaje.getEdad());
+        personajeActual.setPeso(personaje.getPeso());
+        personajeActual.setHistoria(personaje.getHistoria());
+        personajeActual.setPelicula(personaje.getPelicula());
+
+        personajeUpdated = this.service.save(personajeActual);
+
+        this.service.save(personajeUpdated);
 
         response.put("succes", Boolean.TRUE);
         response.put("mensaje", "¡El personaje " + personaje.getNombre() + " ha sido actualizado con éxito!");

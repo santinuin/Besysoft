@@ -16,5 +16,7 @@ public interface PersonajeService {
 
     List<Personaje> findByEdadBetween(Integer desde, Integer hasta);
 
+    Personaje findById(Long id);
+
 }
 
