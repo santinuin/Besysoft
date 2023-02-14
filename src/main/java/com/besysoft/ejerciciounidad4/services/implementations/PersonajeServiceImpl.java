@@ -18,23 +18,15 @@ public class PersonajeServiceImpl extends GenericService<Personaje> implements P
     }
 
     @Override
-    public Personaje update(Personaje personaje) {
+    public Personaje save(Personaje personaje) {
+        Optional<Personaje> oPersonaje = this.repository.findAll().stream()
+                .filter(x -> x.getNombre().equals(personaje.getNombre()))
+                .findFirst();
 
-        if (personaje.getId() == null) {
+        if (oPersonaje.isPresent()) {
             return null;
         }
-
-        Optional<Personaje> oPersonaje = this.repository.findById(personaje.getId());
-
-        /*personaje.setId(this.repository.findAll().size() + 1);*/
-        return this.repository.save(oPersonaje.get());
-    }
-
-    @Override
-    public Personaje save(Personaje personaje) {
-
-        if (personaje.getId() != null) return null;
-
+        personaje.setId(this.repository.findAll().size() + 1);
         return this.repository.save(personaje);
     }
 
@@ -56,6 +48,19 @@ public class PersonajeServiceImpl extends GenericService<Personaje> implements P
     @Override
     public List<Personaje> findByEdadBetween(Integer desde, Integer hasta) {
         return this.repository.findByEdadBetween(desde, hasta);
+    }
+
+    @Override
+    public Personaje updatePersonaje(Long id, Personaje personaje) {
+
+        if (this.repository.findAll().stream()
+                .filter(x -> x.getId().equals(id))
+                .findAny()
+                .isEmpty()) {
+            return null;
+        }
+
+        return this.repository.updatePersonaje(id, personaje);
     }
 
 }

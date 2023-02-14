@@ -82,10 +82,7 @@ public class PersonajeController {
 
         Map<String, Object> response = new HashMap<>();
 
-        if (this.service.findAll().stream()
-                .filter(x -> x.getId().equals(id))
-                .findAny()
-                .isEmpty()) {
+        if (this.service.updatePersonaje(id, personaje) == null) {
 
             response.put("succes", Boolean.FALSE);
             response.put("mensaje", "Error: no se pudo editar, el personaje ID: "
@@ -103,14 +100,7 @@ public class PersonajeController {
 
         }
 
-        personaje.setId(id);
-        if (this.service.update(personaje) == null) {
-            response.put("succes", Boolean.FALSE);
-            response.put("mensaje", "Error: no se pudo editar, el personaje ID: "
-                    .concat(id.toString().concat(" no existe")));
-
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
+        this.service.updatePersonaje(id, personaje);
 
         response.put("succes", Boolean.TRUE);
         response.put("mensaje", "¡El personaje " + personaje.getNombre() + " ha sido actualizado con éxito!");

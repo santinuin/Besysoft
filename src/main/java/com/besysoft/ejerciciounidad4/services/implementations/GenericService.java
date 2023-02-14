@@ -11,7 +11,7 @@ public abstract class GenericService<E> {
         this.list = new ArrayList<>();
     }
 
-    public E update(E e) {
+    public E save(E e) {
         this.list.add(e);
         return e;
     }

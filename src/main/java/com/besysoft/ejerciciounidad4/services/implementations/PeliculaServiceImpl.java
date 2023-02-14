@@ -19,7 +19,7 @@ public class PeliculaServiceImpl extends GenericService<Pelicula> implements Pel
     }
 
     @Override
-    public Pelicula update(Pelicula pelicula) {
+    public Pelicula save(Pelicula pelicula) {
 
         Optional<Pelicula> oPelicula = this.repository.findAll().stream()
                 .filter(x -> x.getTitulo().equals(pelicula.getTitulo()))
@@ -30,11 +30,6 @@ public class PeliculaServiceImpl extends GenericService<Pelicula> implements Pel
         }
         pelicula.setId(this.repository.findAll().size() + 1);
         return this.repository.save(pelicula);
-    }
-
-    @Override
-    public Pelicula save(Pelicula pelicula) {
-        return null;
     }
 
     @Override

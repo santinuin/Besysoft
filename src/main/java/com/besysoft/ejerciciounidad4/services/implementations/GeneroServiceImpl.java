@@ -20,11 +20,6 @@ public class GeneroServiceImpl extends GenericService<Genero> implements GeneroS
 
     @Override
     public Genero save(Genero genero) {
-        return null;
-    }
-
-    @Override
-    public Genero update(Genero genero) {
         Optional<Genero> oGenero = this.repository.findAll().stream()
                 .filter(x -> x.getNombre().equals(genero.getNombre()))
                 .findFirst();
