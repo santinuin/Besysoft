@@ -17,7 +17,4 @@ public interface PeliculaRepository extends JpaRepository<Pelicula, Long> {
 
     List<Pelicula> findByTituloIgnoreCase(String nombre);
 
-    @Query("select p from peliculas p where p.genero_id = 1")
-    List<Pelicula> findPeliculasByGenero(Long id);
-
 }
