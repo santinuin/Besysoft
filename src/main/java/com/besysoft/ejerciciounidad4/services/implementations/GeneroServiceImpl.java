@@ -7,6 +7,7 @@ import com.besysoft.ejerciciounidad4.services.interfaces.GeneroService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GeneroServiceImpl extends GenericService<Genero> implements GeneroService {
@@ -19,7 +20,10 @@ public class GeneroServiceImpl extends GenericService<Genero> implements GeneroS
 
     @Override
     public Genero save(Genero genero) {
-        if (this.repository.findByNombreIgnoreCase(genero.getNombre()) != null) {
+
+        Optional<Genero> oGenero = Optional.ofNullable(this.repository.findByNombreIgnoreCase(genero.getNombre()));
+
+        if (oGenero.isPresent()) {
             return null;
         }
 
@@ -38,7 +42,7 @@ public class GeneroServiceImpl extends GenericService<Genero> implements GeneroS
 
     @Override
     public Genero findById(Long id){
-        return this.repository.findById(id).orElseThrow();
+        return this.repository.findById(id).orElse(null);
     }
 
 }

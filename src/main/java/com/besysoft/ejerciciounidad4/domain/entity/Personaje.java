@@ -26,7 +26,7 @@ public class Personaje implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pelicula_id")
-    @JsonIgnoreProperties(value = {"personajes"})
+    @JsonIgnoreProperties(value = {"id", "personajes"})
     private Pelicula pelicula;
 
     public Personaje() {

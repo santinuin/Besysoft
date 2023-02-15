@@ -1,6 +1,7 @@
 package com.besysoft.ejerciciounidad4.controllers;
 
 import com.besysoft.ejerciciounidad4.domain.entity.Genero;
+import com.besysoft.ejerciciounidad4.domain.entity.Personaje;
 import com.besysoft.ejerciciounidad4.services.interfaces.GeneroService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +58,8 @@ public class GeneroController {
     public ResponseEntity<?> updateGenero(@PathVariable Long id,
                                           @RequestBody Genero genero) {
 
+        Genero generoUpdate = this.service.findById(id);
+
         Map<String, Object> response = new HashMap<>();
 
         if (this.service.findById(id) == null) {
@@ -76,7 +79,10 @@ public class GeneroController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        this.service.save(genero);
+        generoUpdate.setNombre(genero.getNombre());
+        generoUpdate.setPeliculas(genero.getPeliculas());
+
+        this.service.save(generoUpdate);
 
         response.put("succes", Boolean.TRUE);
         response.put("mensaje", "¡El genero " + genero.getNombre() + " ha sido modificado con éxito!");

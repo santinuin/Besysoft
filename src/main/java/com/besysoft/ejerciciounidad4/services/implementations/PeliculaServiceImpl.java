@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PeliculaServiceImpl extends GenericService<Pelicula> implements PeliculaService {
@@ -35,7 +34,7 @@ public class PeliculaServiceImpl extends GenericService<Pelicula> implements Pel
 
     @Override
     public List<Pelicula> findByTitulo(String titulo) {
-        return this.repository.findByTitulo(titulo);
+        return this.repository.findByTituloIgnoreCase(titulo);
     }
 
     @Override
@@ -50,7 +49,7 @@ public class PeliculaServiceImpl extends GenericService<Pelicula> implements Pel
 
     @Override
     public Pelicula findById(Long id) {
-        return this.repository.findById(id).orElseThrow();
+        return this.repository.findById(id).orElse(null);
     }
 
 }

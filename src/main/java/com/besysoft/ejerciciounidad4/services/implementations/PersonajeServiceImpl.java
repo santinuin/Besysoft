@@ -50,7 +50,7 @@ public class PersonajeServiceImpl extends GenericService<Personaje> implements P
 
     @Override
     public Personaje findById(Long id) {
-        return this.repository.findById(id).orElseThrow();
+        return this.repository.findById(id).orElse(null);
     }
 
 

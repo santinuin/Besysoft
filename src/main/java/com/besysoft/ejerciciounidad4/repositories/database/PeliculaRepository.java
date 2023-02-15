@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface PeliculaRepository extends JpaRepository<Pelicula, Long> {
 
-    List<Pelicula> findByTitulo(String titulo);
-
     List<Pelicula> findByFechaDeCreacionBetween(Date desde, Date hasta);
 
     List<Pelicula> findByCalificacionBetween(Integer desde, Integer hasta);

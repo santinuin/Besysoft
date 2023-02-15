@@ -1,6 +1,7 @@
 package com.besysoft.ejerciciounidad4.controllers;
 
 import com.besysoft.ejerciciounidad4.domain.entity.Pelicula;
+import com.besysoft.ejerciciounidad4.domain.entity.Personaje;
 import com.besysoft.ejerciciounidad4.services.interfaces.GeneroService;
 import com.besysoft.ejerciciounidad4.services.interfaces.PeliculaService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -110,9 +111,11 @@ public class PeliculaController {
     public ResponseEntity<?> updatePelicula(@PathVariable Long id,
                                             @RequestBody Pelicula pelicula) {
 
+        Pelicula peliculaUpdate = this.peliculaService.findById(id);
+
         Map<String, Object> response = new HashMap<>();
 
-        if (this.peliculaService.findById(pelicula.getId()) == null) {
+        if (this.peliculaService.findById(id) == null) {
 
             response.put("succes", Boolean.FALSE);
             response.put("mensaje", "Error: no se pudo editar, la película ID: "
@@ -129,7 +132,12 @@ public class PeliculaController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        this.peliculaService.save(pelicula);
+        peliculaUpdate.setTitulo(pelicula.getTitulo());
+        peliculaUpdate.setFechaDeCreacion(pelicula.getFechaDeCreacion());
+        peliculaUpdate.setCalificacion(pelicula.getCalificacion());
+        peliculaUpdate.setPersonajes(pelicula.getPersonajes());
+
+        this.peliculaService.save(peliculaUpdate);
 
         response.put("succes", Boolean.TRUE);
         response.put("mensaje", "¡La pelicula " + pelicula.getTitulo() + " ha sido modificada con éxito!");
