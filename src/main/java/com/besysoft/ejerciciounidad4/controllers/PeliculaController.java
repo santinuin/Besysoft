@@ -1,7 +1,6 @@
 package com.besysoft.ejerciciounidad4.controllers;
 
 import com.besysoft.ejerciciounidad4.domain.entity.Pelicula;
-import com.besysoft.ejerciciounidad4.domain.entity.Personaje;
 import com.besysoft.ejerciciounidad4.services.interfaces.GeneroService;
 import com.besysoft.ejerciciounidad4.services.interfaces.PeliculaService;
 import org.springframework.format.annotation.DateTimeFormat;

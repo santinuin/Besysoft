@@ -1,7 +1,6 @@
 package com.besysoft.ejerciciounidad4.controllers;
 
 import com.besysoft.ejerciciounidad4.domain.entity.Genero;
-import com.besysoft.ejerciciounidad4.domain.entity.Personaje;
 import com.besysoft.ejerciciounidad4.services.interfaces.GeneroService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
