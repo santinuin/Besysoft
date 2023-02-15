@@ -9,11 +9,10 @@ public interface GeneroService {
 
     Genero save(Genero genero);
 
-    Genero update(Genero genero);
-
     List<Genero> findAll();
 
-    List<Pelicula> findByGenero(String nombre);
+    List<Pelicula> findPeliculasByGeneroNombre(String nombre);
 
-    Genero updateGenero(Long id, Genero genero);
+    Genero findById(Long id);
+
 }

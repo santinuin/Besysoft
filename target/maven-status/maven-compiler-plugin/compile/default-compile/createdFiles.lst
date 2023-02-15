@@ -1,8 +1,0 @@
-com/besysoft/ejerciciounidad1/controllers/PeliculaRestController.class
-com/besysoft/ejerciciounidad1/domain/models/Personaje.class
-com/besysoft/ejerciciounidad1/EjercicioUnidad1Application.class
-com/besysoft/ejerciciounidad1/domain/models/Genero.class
-com/besysoft/ejerciciounidad1/domain/repository/PersonajeRepository.class
-com/besysoft/ejerciciounidad1/domain/models/Pelicula.class
-com/besysoft/ejerciciounidad1/controllers/PersonajeRestController.class
-com/besysoft/ejerciciounidad1/domain/repository/PeliculaRepository.class

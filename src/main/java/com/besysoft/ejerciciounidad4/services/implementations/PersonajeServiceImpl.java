@@ -6,7 +6,6 @@ import com.besysoft.ejerciciounidad4.services.interfaces.PersonajeService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PersonajeServiceImpl extends GenericService<Personaje> implements PersonajeService {
@@ -18,22 +17,13 @@ public class PersonajeServiceImpl extends GenericService<Personaje> implements P
     }
 
     @Override
-    public Personaje update(Personaje personaje) {
-
-        if (personaje.getId() == null) {
-            return null;
-        }
-
-        Optional<Personaje> oPersonaje = this.repository.findById(personaje.getId());
-
-        /*personaje.setId(this.repository.findAll().size() + 1);*/
-        return this.repository.save(oPersonaje.get());
-    }
-
-    @Override
     public Personaje save(Personaje personaje) {
 
-        if (personaje.getId() != null) return null;
+        List<Personaje> personajesList = this.repository.findByNombreIgnoreCase(personaje.getNombre());
+
+        if (!personajesList.isEmpty()) {
+            return null;
+        }
 
         return this.repository.save(personaje);
     }
@@ -45,7 +35,7 @@ public class PersonajeServiceImpl extends GenericService<Personaje> implements P
 
     @Override
     public List<Personaje> findByNombre(String nombre) {
-        return this.repository.findByNombre(nombre);
+        return this.repository.findByNombreIgnoreCase(nombre);
     }
 
     @Override
@@ -57,5 +47,11 @@ public class PersonajeServiceImpl extends GenericService<Personaje> implements P
     public List<Personaje> findByEdadBetween(Integer desde, Integer hasta) {
         return this.repository.findByEdadBetween(desde, hasta);
     }
+
+    @Override
+    public Personaje findById(Long id) {
+        return this.repository.findById(id).orElse(null);
+    }
+
 
 }

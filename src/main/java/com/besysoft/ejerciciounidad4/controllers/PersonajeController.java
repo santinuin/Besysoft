@@ -63,7 +63,7 @@ public class PersonajeController {
 
         if (this.service.save(personaje) == null) {
             response.put("succes", Boolean.FALSE);
-            response.put("mensaje", "La pelicula " + personaje.getNombre() + " ya existe");
+            response.put("mensaje", "El personaje " + personaje.getNombre() + " ya existe");
 
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
@@ -80,12 +80,11 @@ public class PersonajeController {
     public ResponseEntity<?> updatePersonaje(@PathVariable Long id,
                                              @RequestBody Personaje personaje) {
 
+        Personaje personajeUpdate = this.service.findById(id);
+
         Map<String, Object> response = new HashMap<>();
 
-        if (this.service.findAll().stream()
-                .filter(x -> x.getId().equals(id))
-                .findAny()
-                .isEmpty()) {
+        if (personajeUpdate == null) {
 
             response.put("succes", Boolean.FALSE);
             response.put("mensaje", "Error: no se pudo editar, el personaje ID: "
@@ -103,14 +102,13 @@ public class PersonajeController {
 
         }
 
-        personaje.setId(id);
-        if (this.service.update(personaje) == null) {
-            response.put("succes", Boolean.FALSE);
-            response.put("mensaje", "Error: no se pudo editar, el personaje ID: "
-                    .concat(id.toString().concat(" no existe")));
+        personajeUpdate.setNombre(personaje.getNombre());
+        personajeUpdate.setEdad(personaje.getEdad());
+        personajeUpdate.setPeso(personaje.getPeso());
+        personajeUpdate.setHistoria(personaje.getHistoria());
+        personajeUpdate.setPelicula(personaje.getPelicula());
 
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
+        this.service.save(personajeUpdate);
 
         response.put("succes", Boolean.TRUE);
         response.put("mensaje", "¡El personaje " + personaje.getNombre() + " ha sido actualizado con éxito!");

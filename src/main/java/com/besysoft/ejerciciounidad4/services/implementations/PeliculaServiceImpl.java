@@ -1,13 +1,12 @@
 package com.besysoft.ejerciciounidad4.services.implementations;
 
 import com.besysoft.ejerciciounidad4.domain.entity.Pelicula;
-import com.besysoft.ejerciciounidad4.repositories.memory.PeliculaRepository;
+import com.besysoft.ejerciciounidad4.repositories.database.PeliculaRepository;
 import com.besysoft.ejerciciounidad4.services.interfaces.PeliculaService;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PeliculaServiceImpl extends GenericService<Pelicula> implements PeliculaService {
@@ -19,22 +18,13 @@ public class PeliculaServiceImpl extends GenericService<Pelicula> implements Pel
     }
 
     @Override
-    public Pelicula update(Pelicula pelicula) {
+    public Pelicula save(Pelicula pelicula) {
 
-        Optional<Pelicula> oPelicula = this.repository.findAll().stream()
-                .filter(x -> x.getTitulo().equals(pelicula.getTitulo()))
-                .findFirst();
-
-        if (oPelicula.isPresent()) {
+        if (!this.repository.findByTituloIgnoreCase(pelicula.getTitulo()).isEmpty()) {
             return null;
         }
-        pelicula.setId(this.repository.findAll().size() + 1);
-        return this.repository.save(pelicula);
-    }
 
-    @Override
-    public Pelicula save(Pelicula pelicula) {
-        return null;
+        return this.repository.save(pelicula);
     }
 
     @Override
@@ -44,12 +34,12 @@ public class PeliculaServiceImpl extends GenericService<Pelicula> implements Pel
 
     @Override
     public List<Pelicula> findByTitulo(String titulo) {
-        return this.repository.findByTitulo(titulo);
+        return this.repository.findByTituloIgnoreCase(titulo);
     }
 
     @Override
     public List<Pelicula> findByDateBetween(Date desde, Date hasta) {
-        return this.repository.findByDateBetween(desde, hasta);
+        return this.repository.findByFechaDeCreacionBetween(desde, hasta);
     }
 
     @Override
@@ -58,15 +48,8 @@ public class PeliculaServiceImpl extends GenericService<Pelicula> implements Pel
     }
 
     @Override
-    public Pelicula updatePelicula(Long id, Pelicula pelicula) {
-
-        if (this.repository.findAll().stream()
-                .filter(x -> x.getId().equals(id))
-                .findAny()
-                .isEmpty()) {
-            return null;
-        }
-
-        return this.repository.updatePelicula(id, pelicula);
+    public Pelicula findById(Long id) {
+        return this.repository.findById(id).orElse(null);
     }
+
 }

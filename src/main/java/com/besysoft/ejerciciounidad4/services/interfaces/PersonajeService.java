@@ -10,13 +10,13 @@ public interface PersonajeService {
 
     Personaje save(Personaje personaje);
 
-    Personaje update(Personaje personaje);
-
     List<Personaje> findByNombre(String nombre);
 
     List<Personaje> findByEdad(Integer edad);
 
     List<Personaje> findByEdadBetween(Integer desde, Integer hasta);
+
+    Personaje findById(Long id);
 
 }
 

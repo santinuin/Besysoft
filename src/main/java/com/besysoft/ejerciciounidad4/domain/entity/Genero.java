@@ -31,7 +31,7 @@ public class Genero implements Serializable {
         this.peliculas = peliculas;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

@@ -31,7 +31,7 @@ public class PeliculaController {
                                                   @RequestParam(required = false) String genero) {
 
         if (titulo != null && !titulo.isBlank()) return ResponseEntity.ok(this.peliculaService.findByTitulo(titulo));
-        if (genero != null && !genero.isBlank()) return ResponseEntity.ok(this.generoService.findByGenero(genero));
+        if (genero != null && !genero.isBlank()) return ResponseEntity.ok(this.generoService.findPeliculasByGeneroNombre(genero));
 
         return ResponseEntity.ok(this.peliculaService.findAll());
     }
@@ -110,9 +110,11 @@ public class PeliculaController {
     public ResponseEntity<?> updatePelicula(@PathVariable Long id,
                                             @RequestBody Pelicula pelicula) {
 
+        Pelicula peliculaUpdate = this.peliculaService.findById(id);
+
         Map<String, Object> response = new HashMap<>();
 
-        if (this.peliculaService.updatePelicula(id, pelicula) == null) {
+        if (this.peliculaService.findById(id) == null) {
 
             response.put("succes", Boolean.FALSE);
             response.put("mensaje", "Error: no se pudo editar, la película ID: "
@@ -129,7 +131,12 @@ public class PeliculaController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        this.peliculaService.updatePelicula(id, pelicula);
+        peliculaUpdate.setTitulo(pelicula.getTitulo());
+        peliculaUpdate.setFechaDeCreacion(pelicula.getFechaDeCreacion());
+        peliculaUpdate.setCalificacion(pelicula.getCalificacion());
+        peliculaUpdate.setPersonajes(pelicula.getPersonajes());
+
+        this.peliculaService.save(peliculaUpdate);
 
         response.put("succes", Boolean.TRUE);
         response.put("mensaje", "¡La pelicula " + pelicula.getTitulo() + " ha sido modificada con éxito!");
