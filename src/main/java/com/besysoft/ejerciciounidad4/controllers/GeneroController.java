@@ -90,9 +90,11 @@ public class GeneroController {
 
         if (genero.getPeliculas() != null) {
 
-            List<String> peliculaNames = genero.getPeliculas().stream().map(c -> c.getTitulo()).collect(Collectors.toList());
+            List<String> peliculaNombres = genero.getPeliculas().stream()
+                    .map(Pelicula::getTitulo)
+                    .collect(Collectors.toList());
 
-            List<Pelicula> peliculas = this.peliculaService.findByInTitulo(peliculaNames);
+            List<Pelicula> peliculas = this.peliculaService.findByInTitulo(peliculaNombres);
 
             generoUpdate.setPeliculas(peliculas);
         }
