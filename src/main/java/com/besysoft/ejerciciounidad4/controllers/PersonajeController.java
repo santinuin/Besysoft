@@ -1,6 +1,8 @@
 package com.besysoft.ejerciciounidad4.controllers;
 
+import com.besysoft.ejerciciounidad4.domain.entity.Pelicula;
 import com.besysoft.ejerciciounidad4.domain.entity.Personaje;
+import com.besysoft.ejerciciounidad4.services.interfaces.PeliculaService;
 import com.besysoft.ejerciciounidad4.services.interfaces.PersonajeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +18,11 @@ public class PersonajeController {
 
     private final PersonajeService service;
 
-    public PersonajeController(PersonajeService service) {
+    private final PeliculaService peliculaService;
+
+    public PersonajeController(PersonajeService service, PeliculaService peliculaService) {
         this.service = service;
+        this.peliculaService = peliculaService;
     }
 
     @GetMapping
@@ -102,11 +107,22 @@ public class PersonajeController {
 
         }
 
-        personajeUpdate.setNombre(personaje.getNombre());
+        if (!personaje.getNombre().equals(personajeUpdate.getNombre())) {
+            personajeUpdate.setNombre(personaje.getNombre());
+        }
+
         personajeUpdate.setEdad(personaje.getEdad());
         personajeUpdate.setPeso(personaje.getPeso());
         personajeUpdate.setHistoria(personaje.getHistoria());
-        personajeUpdate.setPelicula(personaje.getPelicula());
+
+        if (personaje.getPelicula() != null) {
+            Pelicula pelicula = this.peliculaService.findByTitulo(personaje.getPelicula().getTitulo())
+                    .stream()
+                    .findFirst()
+                    .orElse(null);
+
+            personajeUpdate.setPelicula(pelicula);
+        }
 
         this.service.update(personajeUpdate);
 

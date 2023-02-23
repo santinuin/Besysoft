@@ -1,7 +1,9 @@
 package com.besysoft.ejerciciounidad4.controllers;
 
 import com.besysoft.ejerciciounidad4.domain.entity.Genero;
+import com.besysoft.ejerciciounidad4.domain.entity.Pelicula;
 import com.besysoft.ejerciciounidad4.services.interfaces.GeneroService;
+import com.besysoft.ejerciciounidad4.services.interfaces.PeliculaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/genero")
@@ -16,8 +19,11 @@ public class GeneroController {
 
     private final GeneroService service;
 
-    public GeneroController(GeneroService service) {
+    private final PeliculaService peliculaService;
+
+    public GeneroController(GeneroService service, PeliculaService peliculaService) {
         this.service = service;
+        this.peliculaService = peliculaService;
     }
 
     @GetMapping
@@ -78,8 +84,19 @@ public class GeneroController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        generoUpdate.setNombre(genero.getNombre());
-        generoUpdate.setPeliculas(genero.getPeliculas());
+        if (!genero.getNombre().equals(generoUpdate.getNombre())) {
+            generoUpdate.setNombre(genero.getNombre());
+        }
+
+        if (genero.getPeliculas() != null) {
+
+            List<String> peliculaNames = genero.getPeliculas().stream().map(c -> c.getTitulo()).collect(Collectors.toList());
+
+            List<Pelicula> peliculas = this.peliculaService.findByInTitulo(peliculaNames);
+
+            generoUpdate.setPeliculas(peliculas);
+        }
+
 
         this.service.update(generoUpdate);
 

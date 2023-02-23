@@ -20,4 +20,6 @@ public interface PeliculaService {
     Pelicula findById(Long id);
 
     Pelicula update(Pelicula pelicula);
+
+    List<Pelicula> findByInTitulo(List<String> peliculaNames);
 }

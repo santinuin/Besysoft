@@ -13,7 +13,7 @@ public class Personaje implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 30)
+    @Column(unique = true, nullable = false, length = 30)
     private String nombre;
 
     @Column(length = 3)

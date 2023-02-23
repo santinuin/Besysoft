@@ -59,4 +59,9 @@ public class PeliculaServiceImpl extends GenericService<Pelicula> implements Pel
 
     }
 
+    @Override
+    public List<Pelicula> findByInTitulo(List<String> peliculaNames) {
+        return this.repository.findByTituloIn(peliculaNames);
+    }
+
 }
