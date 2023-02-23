@@ -19,18 +19,6 @@ public class GeneroServiceImpl extends GenericService<Genero> implements GeneroS
     }
 
     @Override
-    public Genero save(Genero genero) {
-
-        Optional<Genero> oGenero = Optional.ofNullable(this.repository.findByNombreIgnoreCase(genero.getNombre()));
-
-        if (oGenero.isPresent()) {
-            return null;
-        }
-
-        return this.repository.save(genero);
-    }
-
-    @Override
     public List<Genero> findAll() {
         return this.repository.findAll();
     }
@@ -43,6 +31,25 @@ public class GeneroServiceImpl extends GenericService<Genero> implements GeneroS
     @Override
     public Genero findById(Long id){
         return this.repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Genero save(Genero genero) {
+
+        Optional<Genero> oGenero = Optional.ofNullable(this.repository.findByNombreIgnoreCase(genero.getNombre()));
+
+        if (oGenero.isPresent()) {
+            return null;
+        }
+
+        return this.repository.save(genero);
+    }
+
+    @Override
+    public Genero update(Genero genero) {
+
+        return this.repository.save(genero);
+
     }
 
 }

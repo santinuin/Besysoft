@@ -17,18 +17,6 @@ public class PersonajeServiceImpl extends GenericService<Personaje> implements P
     }
 
     @Override
-    public Personaje save(Personaje personaje) {
-
-        List<Personaje> personajesList = this.repository.findByNombreIgnoreCase(personaje.getNombre());
-
-        if (!personajesList.isEmpty()) {
-            return null;
-        }
-
-        return this.repository.save(personaje);
-    }
-
-    @Override
     public List<Personaje> findAll() {
         return this.repository.findAll();
     }
@@ -51,6 +39,24 @@ public class PersonajeServiceImpl extends GenericService<Personaje> implements P
     @Override
     public Personaje findById(Long id) {
         return this.repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Personaje save(Personaje personaje) {
+
+        List<Personaje> personajesList = this.repository.findByNombreIgnoreCase(personaje.getNombre());
+
+        if (!personajesList.isEmpty()) {
+            return null;
+        }
+
+        return this.repository.save(personaje);
+    }
+
+    @Override
+    public Personaje update(Personaje personaje) {
+
+        return this.repository.save(personaje);
     }
 
 

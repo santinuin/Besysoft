@@ -18,16 +18,6 @@ public class PeliculaServiceImpl extends GenericService<Pelicula> implements Pel
     }
 
     @Override
-    public Pelicula save(Pelicula pelicula) {
-
-        if (!this.repository.findByTituloIgnoreCase(pelicula.getTitulo()).isEmpty()) {
-            return null;
-        }
-
-        return this.repository.save(pelicula);
-    }
-
-    @Override
     public List<Pelicula> findAll() {
         return this.repository.findAll();
     }
@@ -50,6 +40,23 @@ public class PeliculaServiceImpl extends GenericService<Pelicula> implements Pel
     @Override
     public Pelicula findById(Long id) {
         return this.repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Pelicula save(Pelicula pelicula) {
+
+        if (!this.repository.findByTituloIgnoreCase(pelicula.getTitulo()).isEmpty()) {
+            return null;
+        }
+
+        return this.repository.save(pelicula);
+    }
+
+    @Override
+    public Pelicula update(Pelicula pelicula) {
+
+        return this.repository.save(pelicula);
+
     }
 
 }

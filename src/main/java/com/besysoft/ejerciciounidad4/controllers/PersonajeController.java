@@ -108,7 +108,7 @@ public class PersonajeController {
         personajeUpdate.setHistoria(personaje.getHistoria());
         personajeUpdate.setPelicula(personaje.getPelicula());
 
-        this.service.save(personajeUpdate);
+        this.service.update(personajeUpdate);
 
         response.put("succes", Boolean.TRUE);
         response.put("mensaje", "¡El personaje " + personaje.getNombre() + " ha sido actualizado con éxito!");

@@ -18,4 +18,6 @@ public interface PeliculaService {
     List<Pelicula> findByCalificacionBetween(Integer desde, Integer hasta);
 
     Pelicula findById(Long id);
+
+    Pelicula update(Pelicula pelicula);
 }

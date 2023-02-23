@@ -18,5 +18,6 @@ public interface PersonajeService {
 
     Personaje findById(Long id);
 
+    Personaje update(Personaje personaje);
 }
 

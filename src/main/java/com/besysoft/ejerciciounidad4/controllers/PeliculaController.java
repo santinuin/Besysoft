@@ -136,7 +136,7 @@ public class PeliculaController {
         peliculaUpdate.setCalificacion(pelicula.getCalificacion());
         peliculaUpdate.setPersonajes(pelicula.getPersonajes());
 
-        this.peliculaService.save(peliculaUpdate);
+        this.peliculaService.update(peliculaUpdate);
 
         response.put("succes", Boolean.TRUE);
         response.put("mensaje", "¡La pelicula " + pelicula.getTitulo() + " ha sido modificada con éxito!");

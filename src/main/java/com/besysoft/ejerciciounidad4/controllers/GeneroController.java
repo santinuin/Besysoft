@@ -81,7 +81,7 @@ public class GeneroController {
         generoUpdate.setNombre(genero.getNombre());
         generoUpdate.setPeliculas(genero.getPeliculas());
 
-        this.service.save(generoUpdate);
+        this.service.update(generoUpdate);
 
         response.put("succes", Boolean.TRUE);
         response.put("mensaje", "¡El genero " + genero.getNombre() + " ha sido modificado con éxito!");
