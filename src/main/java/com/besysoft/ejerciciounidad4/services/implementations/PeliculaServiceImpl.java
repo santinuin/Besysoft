@@ -1,20 +1,26 @@
 package com.besysoft.ejerciciounidad4.services.implementations;
 
 import com.besysoft.ejerciciounidad4.domain.entity.Pelicula;
+import com.besysoft.ejerciciounidad4.domain.entity.Personaje;
 import com.besysoft.ejerciciounidad4.repositories.database.PeliculaRepository;
+import com.besysoft.ejerciciounidad4.repositories.database.PersonajeRepository;
 import com.besysoft.ejerciciounidad4.services.interfaces.PeliculaService;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PeliculaServiceImpl extends GenericService<Pelicula> implements PeliculaService {
 
     private final PeliculaRepository repository;
 
-    public PeliculaServiceImpl(PeliculaRepository repository) {
+    private final PersonajeRepository personajeRepository;
+
+    public PeliculaServiceImpl(PeliculaRepository repository, PersonajeRepository personajeRepository) {
         this.repository = repository;
+        this.personajeRepository = personajeRepository;
     }
 
     @Override
@@ -53,15 +59,30 @@ public class PeliculaServiceImpl extends GenericService<Pelicula> implements Pel
     }
 
     @Override
-    public Pelicula update(Pelicula pelicula) {
+    public Pelicula update(Long id, Pelicula pelicula) {
 
-        return this.repository.save(pelicula);
+        Pelicula peliculaUpdate = this.repository.findById(id).orElse(null);
 
-    }
+        if (!pelicula.getTitulo().equals(peliculaUpdate.getTitulo())) {
+            peliculaUpdate.setTitulo(pelicula.getTitulo());
+        }
 
-    @Override
-    public List<Pelicula> findByInTitulo(List<String> peliculaNames) {
-        return this.repository.findByTituloIn(peliculaNames);
+        peliculaUpdate.setFechaDeCreacion(pelicula.getFechaDeCreacion());
+        peliculaUpdate.setCalificacion(pelicula.getCalificacion());
+
+        if (pelicula.getPersonajes() != null) {
+
+            List<String> personajeNombres = pelicula.getPersonajes().stream()
+                    .map(Personaje::getNombre)
+                    .collect(Collectors.toList());
+
+            List<Personaje> personajes = this.personajeRepository.findByNombreInIgnoreCase(personajeNombres);
+
+            peliculaUpdate.setPersonajes(personajes);
+        }
+
+        return this.repository.save(peliculaUpdate);
+
     }
 
 }

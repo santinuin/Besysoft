@@ -1,6 +1,8 @@
 package com.besysoft.ejerciciounidad4.services.implementations;
 
+import com.besysoft.ejerciciounidad4.domain.entity.Pelicula;
 import com.besysoft.ejerciciounidad4.domain.entity.Personaje;
+import com.besysoft.ejerciciounidad4.repositories.database.PeliculaRepository;
 import com.besysoft.ejerciciounidad4.repositories.database.PersonajeRepository;
 import com.besysoft.ejerciciounidad4.services.interfaces.PersonajeService;
 import org.springframework.stereotype.Service;
@@ -12,8 +14,11 @@ public class PersonajeServiceImpl extends GenericService<Personaje> implements P
 
     private final PersonajeRepository repository;
 
-    public PersonajeServiceImpl(PersonajeRepository repository) {
+    private final PeliculaRepository peliculaRepository;
+
+    public PersonajeServiceImpl(PersonajeRepository repository, PeliculaRepository peliculaRepository) {
         this.repository = repository;
+        this.peliculaRepository = peliculaRepository;
     }
 
     @Override
@@ -54,9 +59,29 @@ public class PersonajeServiceImpl extends GenericService<Personaje> implements P
     }
 
     @Override
-    public Personaje update(Personaje personaje) {
+    public Personaje update(Long id, Personaje personaje) {
 
-        return this.repository.save(personaje);
+        Personaje personajeUpdate = this.repository.findById(id).orElse(null);
+
+        if (!personaje.getNombre().equals(personajeUpdate.getNombre())) {
+            personajeUpdate.setNombre(personaje.getNombre());
+        }
+
+        personajeUpdate.setEdad(personaje.getEdad());
+        personajeUpdate.setPeso(personaje.getPeso());
+        personajeUpdate.setHistoria(personaje.getHistoria());
+
+        if (personaje.getPelicula() != null) {
+
+            Pelicula pelicula = this.peliculaRepository.findByTituloIgnoreCase(personaje.getPelicula().getTitulo())
+                    .stream()
+                    .findFirst()
+                    .orElse(null);
+
+            personajeUpdate.setPelicula(pelicula);
+        }
+
+        return this.repository.save(personajeUpdate);
     }
 
 

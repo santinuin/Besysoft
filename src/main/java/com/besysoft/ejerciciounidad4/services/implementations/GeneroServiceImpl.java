@@ -3,19 +3,24 @@ package com.besysoft.ejerciciounidad4.services.implementations;
 import com.besysoft.ejerciciounidad4.domain.entity.Genero;
 import com.besysoft.ejerciciounidad4.domain.entity.Pelicula;
 import com.besysoft.ejerciciounidad4.repositories.database.GeneroRepository;
+import com.besysoft.ejerciciounidad4.repositories.database.PeliculaRepository;
 import com.besysoft.ejerciciounidad4.services.interfaces.GeneroService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class GeneroServiceImpl extends GenericService<Genero> implements GeneroService {
 
     private final GeneroRepository repository;
 
-    public GeneroServiceImpl(GeneroRepository repository) {
+    private final PeliculaRepository peliculaRepository;
+
+    public GeneroServiceImpl(GeneroRepository repository, PeliculaRepository peliculaRepository) {
         this.repository = repository;
+        this.peliculaRepository = peliculaRepository;
     }
 
     @Override
@@ -29,7 +34,7 @@ public class GeneroServiceImpl extends GenericService<Genero> implements GeneroS
     }
 
     @Override
-    public Genero findById(Long id){
+    public Genero findById(Long id) {
         return this.repository.findById(id).orElse(null);
     }
 
@@ -46,9 +51,26 @@ public class GeneroServiceImpl extends GenericService<Genero> implements GeneroS
     }
 
     @Override
-    public Genero update(Genero genero) {
+    public Genero update(Long id, Genero genero) {
 
-        return this.repository.save(genero);
+        Genero generoUpdate = this.repository.findById(id).orElse(null);
+
+        if (!genero.getNombre().equals(generoUpdate.getNombre())) {
+            generoUpdate.setNombre(genero.getNombre());
+        }
+
+        if (genero.getPeliculas() != null) {
+
+            List<String> peliculaNombres = genero.getPeliculas().stream()
+                    .map(Pelicula::getTitulo)
+                    .collect(Collectors.toList());
+
+            List<Pelicula> peliculas = this.peliculaRepository.findByTituloInIgnoreCase(peliculaNombres);
+
+            generoUpdate.setPeliculas(peliculas);
+        }
+
+        return this.repository.save(generoUpdate);
 
     }
 

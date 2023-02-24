@@ -12,4 +12,6 @@ public interface PersonajeRepository extends JpaRepository<Personaje, Long> {
     List<Personaje> findByEdadBetween(Integer desde, Integer hasta);
 
     List<Personaje> findByNombreIgnoreCase(String nombre);
+
+    List<Personaje> findByNombreInIgnoreCase(List<String> personajeNombres);
 }

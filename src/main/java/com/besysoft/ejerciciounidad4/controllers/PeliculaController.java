@@ -31,7 +31,8 @@ public class PeliculaController {
                                                   @RequestParam(required = false) String genero) {
 
         if (titulo != null && !titulo.isBlank()) return ResponseEntity.ok(this.peliculaService.findByTitulo(titulo));
-        if (genero != null && !genero.isBlank()) return ResponseEntity.ok(this.generoService.findPeliculasByGeneroNombre(genero));
+        if (genero != null && !genero.isBlank())
+            return ResponseEntity.ok(this.generoService.findPeliculasByGeneroNombre(genero));
 
         return ResponseEntity.ok(this.peliculaService.findAll());
     }
@@ -110,8 +111,6 @@ public class PeliculaController {
     public ResponseEntity<?> updatePelicula(@PathVariable Long id,
                                             @RequestBody Pelicula pelicula) {
 
-        Pelicula peliculaUpdate = this.peliculaService.findById(id);
-
         Map<String, Object> response = new HashMap<>();
 
         if (this.peliculaService.findById(id) == null) {
@@ -131,12 +130,7 @@ public class PeliculaController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        peliculaUpdate.setTitulo(pelicula.getTitulo());
-        peliculaUpdate.setFechaDeCreacion(pelicula.getFechaDeCreacion());
-        peliculaUpdate.setCalificacion(pelicula.getCalificacion());
-        peliculaUpdate.setPersonajes(pelicula.getPersonajes());
-
-        this.peliculaService.update(peliculaUpdate);
+        this.peliculaService.update(id, pelicula);
 
         response.put("succes", Boolean.TRUE);
         response.put("mensaje", "¡La pelicula " + pelicula.getTitulo() + " ha sido modificada con éxito!");

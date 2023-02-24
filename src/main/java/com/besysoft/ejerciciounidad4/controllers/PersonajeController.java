@@ -1,6 +1,5 @@
 package com.besysoft.ejerciciounidad4.controllers;
 
-import com.besysoft.ejerciciounidad4.domain.entity.Pelicula;
 import com.besysoft.ejerciciounidad4.domain.entity.Personaje;
 import com.besysoft.ejerciciounidad4.services.interfaces.PeliculaService;
 import com.besysoft.ejerciciounidad4.services.interfaces.PersonajeService;
@@ -85,11 +84,9 @@ public class PersonajeController {
     public ResponseEntity<?> updatePersonaje(@PathVariable Long id,
                                              @RequestBody Personaje personaje) {
 
-        Personaje personajeUpdate = this.service.findById(id);
-
         Map<String, Object> response = new HashMap<>();
 
-        if (personajeUpdate == null) {
+        if (this.service.findById(id) == null) {
 
             response.put("succes", Boolean.FALSE);
             response.put("mensaje", "Error: no se pudo editar, el personaje ID: "
@@ -107,24 +104,7 @@ public class PersonajeController {
 
         }
 
-        if (!personaje.getNombre().equals(personajeUpdate.getNombre())) {
-            personajeUpdate.setNombre(personaje.getNombre());
-        }
-
-        personajeUpdate.setEdad(personaje.getEdad());
-        personajeUpdate.setPeso(personaje.getPeso());
-        personajeUpdate.setHistoria(personaje.getHistoria());
-
-        if (personaje.getPelicula() != null) {
-            Pelicula pelicula = this.peliculaService.findByTitulo(personaje.getPelicula().getTitulo())
-                    .stream()
-                    .findFirst()
-                    .orElse(null);
-
-            personajeUpdate.setPelicula(pelicula);
-        }
-
-        this.service.update(personajeUpdate);
+        this.service.update(id, personaje);
 
         response.put("succes", Boolean.TRUE);
         response.put("mensaje", "¡El personaje " + personaje.getNombre() + " ha sido actualizado con éxito!");

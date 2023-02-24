@@ -15,5 +15,5 @@ public interface GeneroService {
 
     Genero findById(Long id);
 
-    Genero update(Genero genero);
+    Genero update(Long id, Genero genero);
 }

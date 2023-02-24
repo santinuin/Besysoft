@@ -1,9 +1,7 @@
 package com.besysoft.ejerciciounidad4.controllers;
 
 import com.besysoft.ejerciciounidad4.domain.entity.Genero;
-import com.besysoft.ejerciciounidad4.domain.entity.Pelicula;
 import com.besysoft.ejerciciounidad4.services.interfaces.GeneroService;
-import com.besysoft.ejerciciounidad4.services.interfaces.PeliculaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/genero")
@@ -19,11 +16,8 @@ public class GeneroController {
 
     private final GeneroService service;
 
-    private final PeliculaService peliculaService;
-
-    public GeneroController(GeneroService service, PeliculaService peliculaService) {
+    public GeneroController(GeneroService service) {
         this.service = service;
-        this.peliculaService = peliculaService;
     }
 
     @GetMapping
@@ -51,10 +45,10 @@ public class GeneroController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
+        this.service.save(genero);
+
         response.put("succes", Boolean.TRUE);
         response.put("mensaje", "¡El genero " + genero.getNombre() + " ha sido creado con éxito!");
-
-        this.service.save(genero);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -62,8 +56,6 @@ public class GeneroController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateGenero(@PathVariable Long id,
                                           @RequestBody Genero genero) {
-
-        Genero generoUpdate = this.service.findById(id);
 
         Map<String, Object> response = new HashMap<>();
 
@@ -84,23 +76,7 @@ public class GeneroController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        if (!genero.getNombre().equals(generoUpdate.getNombre())) {
-            generoUpdate.setNombre(genero.getNombre());
-        }
-
-        if (genero.getPeliculas() != null) {
-
-            List<String> peliculaNombres = genero.getPeliculas().stream()
-                    .map(Pelicula::getTitulo)
-                    .collect(Collectors.toList());
-
-            List<Pelicula> peliculas = this.peliculaService.findByInTitulo(peliculaNombres);
-
-            generoUpdate.setPeliculas(peliculas);
-        }
-
-
-        this.service.update(generoUpdate);
+        this.service.update(id, genero);
 
         response.put("succes", Boolean.TRUE);
         response.put("mensaje", "¡El genero " + genero.getNombre() + " ha sido modificado con éxito!");

@@ -18,7 +18,7 @@ public class Genero implements Serializable {
     private String nombre;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name="genero_id")
+    @JoinColumn(name = "genero_id")
     @JsonIgnoreProperties(value = "id")
     private List<Pelicula> peliculas;
 
