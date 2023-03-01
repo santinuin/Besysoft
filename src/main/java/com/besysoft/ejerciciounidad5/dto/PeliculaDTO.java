@@ -1,6 +1,7 @@
 package com.besysoft.ejerciciounidad5.dto;
 
 import com.besysoft.ejerciciounidad5.domain.entity.Personaje;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ public class PeliculaDTO {
 
     private String titulo;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date fechaDeCreacion;
 
     private Integer calificacion;
