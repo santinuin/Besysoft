@@ -28,7 +28,7 @@ public class Pelicula implements Serializable {
     private Integer calificacion;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pelicula", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"id", "pelicula"})
+    //@JsonIgnoreProperties(value = {"id", "pelicula"})
     private List<Personaje> personajes;
 
     public Pelicula() {

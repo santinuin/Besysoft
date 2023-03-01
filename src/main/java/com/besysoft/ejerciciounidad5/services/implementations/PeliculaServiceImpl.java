@@ -2,6 +2,8 @@ package com.besysoft.ejerciciounidad5.services.implementations;
 
 import com.besysoft.ejerciciounidad5.domain.entity.Pelicula;
 import com.besysoft.ejerciciounidad5.domain.entity.Personaje;
+import com.besysoft.ejerciciounidad5.dto.PeliculaDTO;
+import com.besysoft.ejerciciounidad5.dto.mapper.PeliculaMapper;
 import com.besysoft.ejerciciounidad5.repositories.database.PeliculaRepository;
 import com.besysoft.ejerciciounidad5.repositories.database.PersonajeRepository;
 import com.besysoft.ejerciciounidad5.services.interfaces.PeliculaService;
@@ -13,45 +15,48 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class PeliculaServiceImpl extends GenericService<Pelicula> implements PeliculaService {
+public class PeliculaServiceImpl extends GenericService<Pelicula, PeliculaDTO> implements PeliculaService {
 
     private final PeliculaRepository repository;
 
     private final PersonajeRepository personajeRepository;
 
-    public PeliculaServiceImpl(PeliculaRepository repository, PersonajeRepository personajeRepository) {
+    private final PeliculaMapper mapper;
+
+    public PeliculaServiceImpl(PeliculaRepository repository, PersonajeRepository personajeRepository, PeliculaMapper mapper) {
         this.repository = repository;
         this.personajeRepository = personajeRepository;
+        this.mapper = mapper;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Pelicula> findAll() {
-        return this.repository.findAll();
+    public List<PeliculaDTO> findAll() {
+        return this.mapper.toDTOList(this.repository.findAll());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Pelicula> findByTitulo(String titulo) {
-        return this.repository.findByTituloIgnoreCase(titulo);
+    public List<PeliculaDTO> findByTitulo(String titulo) {
+        return this.mapper.toDTOList(this.repository.findByTituloIgnoreCase(titulo));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Pelicula> findByDateBetween(Date desde, Date hasta) {
-        return this.repository.findByFechaDeCreacionBetween(desde, hasta);
+    public List<PeliculaDTO> findByDateBetween(Date desde, Date hasta) {
+        return this.mapper.toDTOList(this.repository.findByFechaDeCreacionBetween(desde, hasta));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Pelicula> findByCalificacionBetween(Integer desde, Integer hasta) {
-        return this.repository.findByCalificacionBetween(desde, hasta);
+    public List<PeliculaDTO> findByCalificacionBetween(Integer desde, Integer hasta) {
+        return this.mapper.toDTOList(this.repository.findByCalificacionBetween(desde, hasta));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Pelicula findById(Long id) {
-        return this.repository.findById(id).orElse(null);
+    public PeliculaDTO findById(Long id) {
+        return this.mapper.toDTO(this.repository.findById(id).orElse(null));
     }
 
     @Override

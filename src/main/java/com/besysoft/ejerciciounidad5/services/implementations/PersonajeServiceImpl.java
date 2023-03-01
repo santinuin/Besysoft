@@ -2,6 +2,8 @@ package com.besysoft.ejerciciounidad5.services.implementations;
 
 import com.besysoft.ejerciciounidad5.domain.entity.Pelicula;
 import com.besysoft.ejerciciounidad5.domain.entity.Personaje;
+import com.besysoft.ejerciciounidad5.dto.PersonajeDTO;
+import com.besysoft.ejerciciounidad5.dto.mapper.PersonajeMapper;
 import com.besysoft.ejerciciounidad5.repositories.database.PeliculaRepository;
 import com.besysoft.ejerciciounidad5.repositories.database.PersonajeRepository;
 import com.besysoft.ejerciciounidad5.services.interfaces.PersonajeService;
@@ -11,45 +13,48 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class PersonajeServiceImpl extends GenericService<Personaje> implements PersonajeService {
+public class PersonajeServiceImpl extends GenericService<Personaje, PersonajeDTO> implements PersonajeService {
 
     private final PersonajeRepository repository;
 
     private final PeliculaRepository peliculaRepository;
 
-    public PersonajeServiceImpl(PersonajeRepository repository, PeliculaRepository peliculaRepository) {
+    private final PersonajeMapper mapper;
+
+    public PersonajeServiceImpl(PersonajeRepository repository, PeliculaRepository peliculaRepository, PersonajeMapper mapper) {
         this.repository = repository;
         this.peliculaRepository = peliculaRepository;
+        this.mapper = mapper;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Personaje> findAll() {
-        return this.repository.findAll();
+    public List<PersonajeDTO> findAll() {
+        return this.mapper.toDTOList(this.repository.findAll());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Personaje> findByNombre(String nombre) {
-        return this.repository.findByNombreIgnoreCase(nombre);
+    public List<PersonajeDTO> findByNombre(String nombre) {
+        return this.mapper.toDTOList(this.repository.findByNombreIgnoreCase(nombre));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Personaje> findByEdad(Integer edad) {
-        return this.repository.findByEdad(edad);
+    public List<PersonajeDTO> findByEdad(Integer edad) {
+        return this.mapper.toDTOList(this.repository.findByEdad(edad));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Personaje> findByEdadBetween(Integer desde, Integer hasta) {
-        return this.repository.findByEdadBetween(desde, hasta);
+    public List<PersonajeDTO> findByEdadBetween(Integer desde, Integer hasta) {
+        return this.mapper.toDTOList(this.repository.findByEdadBetween(desde, hasta));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Personaje findById(Long id) {
-        return this.repository.findById(id).orElse(null);
+    public PersonajeDTO findById(Long id) {
+        return this.mapper.toDTO(this.repository.findById(id).orElse(null));
     }
 
     @Override

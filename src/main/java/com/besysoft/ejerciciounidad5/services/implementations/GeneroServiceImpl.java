@@ -2,6 +2,10 @@ package com.besysoft.ejerciciounidad5.services.implementations;
 
 import com.besysoft.ejerciciounidad5.domain.entity.Genero;
 import com.besysoft.ejerciciounidad5.domain.entity.Pelicula;
+import com.besysoft.ejerciciounidad5.dto.GeneroDTO;
+import com.besysoft.ejerciciounidad5.dto.PeliculaDTO;
+import com.besysoft.ejerciciounidad5.dto.mapper.GeneroMapper;
+import com.besysoft.ejerciciounidad5.dto.mapper.PeliculaMapper;
 import com.besysoft.ejerciciounidad5.repositories.database.GeneroRepository;
 import com.besysoft.ejerciciounidad5.repositories.database.PeliculaRepository;
 import com.besysoft.ejerciciounidad5.services.interfaces.GeneroService;
@@ -13,27 +17,33 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class GeneroServiceImpl extends GenericService<Genero> implements GeneroService {
+public class GeneroServiceImpl extends GenericService<Genero, GeneroDTO> implements GeneroService {
 
     private final GeneroRepository repository;
 
     private final PeliculaRepository peliculaRepository;
 
-    public GeneroServiceImpl(GeneroRepository repository, PeliculaRepository peliculaRepository) {
+    private final GeneroMapper mapper;
+
+    private final PeliculaMapper peliculaMapper;
+    
+    public GeneroServiceImpl(GeneroRepository repository, PeliculaRepository peliculaRepository, GeneroMapper mapper, PeliculaMapper peliculaMapper) {
         this.repository = repository;
         this.peliculaRepository = peliculaRepository;
+        this.mapper = mapper;
+        this.peliculaMapper = peliculaMapper;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Genero> findAll() {
-        return this.repository.findAll();
+    public List<GeneroDTO> findAll() {
+        return this.mapper.toDTOList(this.repository.findAll());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Pelicula> findPeliculasByGeneroNombre(String nombre) {
-        return this.repository.findByNombreIgnoreCase(nombre).getPeliculas();
+    public List<PeliculaDTO> findPeliculasByGeneroNombre(String nombre) {
+        return this.peliculaMapper.toDTOList(this.repository.findByNombreIgnoreCase(nombre).getPeliculas());
     }
 
     @Override

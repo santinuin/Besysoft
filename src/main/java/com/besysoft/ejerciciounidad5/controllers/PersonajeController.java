@@ -1,6 +1,7 @@
 package com.besysoft.ejerciciounidad5.controllers;
 
 import com.besysoft.ejerciciounidad5.domain.entity.Personaje;
+import com.besysoft.ejerciciounidad5.dto.PersonajeDTO;
 import com.besysoft.ejerciciounidad5.services.interfaces.PeliculaService;
 import com.besysoft.ejerciciounidad5.services.interfaces.PersonajeService;
 import org.springframework.http.HttpStatus;
@@ -25,8 +26,8 @@ public class PersonajeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Personaje>> findAll(@RequestParam(required = false) String nombre,
-                                                   @RequestParam(required = false) Integer edad) {
+    public ResponseEntity<List<PersonajeDTO>> findAll(@RequestParam(required = false) String nombre,
+                                                      @RequestParam(required = false) Integer edad) {
 
         if (nombre != null && !nombre.isBlank()) return ResponseEntity.ok(this.service.findByNombre(nombre));
         if (edad != null) return ResponseEntity.ok(this.service.findByEdad(edad));

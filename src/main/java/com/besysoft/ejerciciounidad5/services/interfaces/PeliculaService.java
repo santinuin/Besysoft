@@ -1,6 +1,7 @@
 package com.besysoft.ejerciciounidad5.services.interfaces;
 
 import com.besysoft.ejerciciounidad5.domain.entity.Pelicula;
+import com.besysoft.ejerciciounidad5.dto.PeliculaDTO;
 
 import java.util.Date;
 import java.util.List;
@@ -9,15 +10,15 @@ public interface PeliculaService {
 
     Pelicula save(Pelicula pelicula);
 
-    List<Pelicula> findAll();
+    List<PeliculaDTO> findAll();
 
-    List<Pelicula> findByTitulo(String titulo);
+    List<PeliculaDTO> findByTitulo(String titulo);
 
-    List<Pelicula> findByDateBetween(Date desde, Date hasta);
+    List<PeliculaDTO> findByDateBetween(Date desde, Date hasta);
 
-    List<Pelicula> findByCalificacionBetween(Integer desde, Integer hasta);
+    List<PeliculaDTO> findByCalificacionBetween(Integer desde, Integer hasta);
 
-    Pelicula findById(Long id);
+    PeliculaDTO findById(Long id);
 
     Pelicula update(Long id, Pelicula pelicula);
 

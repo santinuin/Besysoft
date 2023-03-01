@@ -1,4 +1,4 @@
-package com.besysoft.ejerciciounidad5.utilities;
+/*package com.besysoft.ejerciciounidad5.utilities;
 
 import com.besysoft.ejerciciounidad5.domain.entity.Genero;
 import com.besysoft.ejerciciounidad5.domain.entity.Pelicula;
@@ -80,4 +80,4 @@ public class LoadData {
 
     }
 
-}
+}*/

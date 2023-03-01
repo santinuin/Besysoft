@@ -1,6 +1,7 @@
 package com.besysoft.ejerciciounidad5.controllers;
 
 import com.besysoft.ejerciciounidad5.domain.entity.Genero;
+import com.besysoft.ejerciciounidad5.dto.GeneroDTO;
 import com.besysoft.ejerciciounidad5.services.interfaces.GeneroService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class GeneroController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Genero>> findAll() {
+    public ResponseEntity<List<GeneroDTO>> findAll() {
         return new ResponseEntity<>(this.service.findAll(), HttpStatus.OK);
     }
 

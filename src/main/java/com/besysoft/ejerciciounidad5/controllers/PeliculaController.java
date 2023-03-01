@@ -1,6 +1,7 @@
 package com.besysoft.ejerciciounidad5.controllers;
 
 import com.besysoft.ejerciciounidad5.domain.entity.Pelicula;
+import com.besysoft.ejerciciounidad5.dto.PeliculaDTO;
 import com.besysoft.ejerciciounidad5.services.interfaces.GeneroService;
 import com.besysoft.ejerciciounidad5.services.interfaces.PeliculaService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,12 +28,11 @@ public class PeliculaController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Pelicula>> findAll(@RequestParam(required = false) String titulo,
-                                                  @RequestParam(required = false) String genero) {
+    public ResponseEntity<List<PeliculaDTO>> findAll(@RequestParam(required = false) String titulo,
+                                                     @RequestParam(required = false) String genero) {
 
         if (titulo != null && !titulo.isBlank()) return ResponseEntity.ok(this.peliculaService.findByTitulo(titulo));
-        if (genero != null && !genero.isBlank())
-            return ResponseEntity.ok(this.generoService.findPeliculasByGeneroNombre(genero));
+        if (genero != null && !genero.isBlank()) return ResponseEntity.ok(this.generoService.findPeliculasByGeneroNombre(genero));
 
         return ResponseEntity.ok(this.peliculaService.findAll());
     }
