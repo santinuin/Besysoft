@@ -27,7 +27,7 @@ public class GeneroController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveGenero(@RequestBody Genero genero) {
+    public ResponseEntity<?> saveGenero(@RequestBody GeneroDTO genero) {
 
         Map<String, Object> response = new HashMap<>();
 
@@ -56,7 +56,7 @@ public class GeneroController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateGenero(@PathVariable Long id,
-                                          @RequestBody Genero genero) {
+                                          @RequestBody GeneroDTO genero) {
 
         Map<String, Object> response = new HashMap<>();
 

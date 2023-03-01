@@ -48,13 +48,13 @@ public class GeneroServiceImpl extends GenericService<Genero, GeneroDTO> impleme
 
     @Override
     @Transactional(readOnly = true)
-    public Genero findById(Long id) {
-        return this.repository.findById(id).orElse(null);
+    public GeneroDTO findById(Long id) {
+        return this.mapper.toDTO(this.repository.findById(id).orElse(null));
     }
 
     @Override
     @Transactional
-    public Genero save(Genero genero) {
+    public Genero save(GeneroDTO genero) {
 
         Optional<Genero> oGenero = Optional.ofNullable(this.repository.findByNombreIgnoreCase(genero.getNombre()));
 
@@ -62,12 +62,12 @@ public class GeneroServiceImpl extends GenericService<Genero, GeneroDTO> impleme
             return null;
         }
 
-        return this.repository.save(genero);
+        return this.repository.save(this.mapper.toEntity(genero));
     }
 
     @Override
     @Transactional
-    public Genero update(Long id, Genero genero) {
+    public Genero update(Long id, GeneroDTO genero) {
 
         Genero generoUpdate = this.repository.findById(id).orElse(null);
 

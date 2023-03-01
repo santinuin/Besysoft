@@ -1,6 +1,5 @@
 package com.besysoft.ejerciciounidad5.controllers;
 
-import com.besysoft.ejerciciounidad5.domain.entity.Personaje;
 import com.besysoft.ejerciciounidad5.dto.PersonajeDTO;
 import com.besysoft.ejerciciounidad5.services.interfaces.PeliculaService;
 import com.besysoft.ejerciciounidad5.services.interfaces.PersonajeService;
@@ -53,7 +52,7 @@ public class PersonajeController {
     }
 
     @PostMapping
-    public ResponseEntity<?> savePersonaje(@RequestBody Personaje personaje) {
+    public ResponseEntity<?> savePersonaje(@RequestBody PersonajeDTO personaje) {
 
         Map<String, Object> response = new HashMap<>();
 
@@ -83,7 +82,7 @@ public class PersonajeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePersonaje(@PathVariable Long id,
-                                             @RequestBody Personaje personaje) {
+                                             @RequestBody PersonajeDTO personaje) {
 
         Map<String, Object> response = new HashMap<>();
 

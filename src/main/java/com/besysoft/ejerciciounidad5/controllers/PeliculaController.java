@@ -1,6 +1,5 @@
 package com.besysoft.ejerciciounidad5.controllers;
 
-import com.besysoft.ejerciciounidad5.domain.entity.Pelicula;
 import com.besysoft.ejerciciounidad5.dto.PeliculaDTO;
 import com.besysoft.ejerciciounidad5.services.interfaces.GeneroService;
 import com.besysoft.ejerciciounidad5.services.interfaces.PeliculaService;
@@ -80,7 +79,7 @@ public class PeliculaController {
     }
 
     @PostMapping
-    public ResponseEntity<?> savePelicula(@RequestBody Pelicula pelicula) {
+    public ResponseEntity<?> savePelicula(@RequestBody PeliculaDTO pelicula) {
 
         Map<String, Object> response = new HashMap<>();
 
@@ -109,7 +108,7 @@ public class PeliculaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePelicula(@PathVariable Long id,
-                                            @RequestBody Pelicula pelicula) {
+                                            @RequestBody PeliculaDTO pelicula) {
 
         Map<String, Object> response = new HashMap<>();
 

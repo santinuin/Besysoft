@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface GeneroService {
 
-    Genero save(Genero genero);
+    Genero save(GeneroDTO genero);
 
     List<GeneroDTO> findAll();
 
     List<PeliculaDTO> findPeliculasByGeneroNombre(String nombre);
 
-    Genero findById(Long id);
+    GeneroDTO findById(Long id);
 
-    Genero update(Long id, Genero genero);
+    Genero update(Long id, GeneroDTO genero);
 }

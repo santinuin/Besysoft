@@ -9,8 +9,6 @@ public interface PersonajeService {
 
     List<PersonajeDTO> findAll();
 
-    Personaje save(Personaje personaje);
-
     List<PersonajeDTO> findByNombre(String nombre);
 
     List<PersonajeDTO> findByEdad(Integer edad);
@@ -19,6 +17,8 @@ public interface PersonajeService {
 
     PersonajeDTO findById(Long id);
 
-    Personaje update(Long id, Personaje personaje);
+    Personaje save(PersonajeDTO personaje);
+
+    Personaje update(Long id, PersonajeDTO personaje);
 }
 

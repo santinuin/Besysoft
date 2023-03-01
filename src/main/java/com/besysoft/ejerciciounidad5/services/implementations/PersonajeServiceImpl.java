@@ -59,7 +59,7 @@ public class PersonajeServiceImpl extends GenericService<Personaje, PersonajeDTO
 
     @Override
     @Transactional
-    public Personaje save(Personaje personaje) {
+    public Personaje save(PersonajeDTO personaje) {
 
         List<Personaje> personajesList = this.repository.findByNombreIgnoreCase(personaje.getNombre());
 
@@ -67,12 +67,12 @@ public class PersonajeServiceImpl extends GenericService<Personaje, PersonajeDTO
             return null;
         }
 
-        return this.repository.save(personaje);
+        return this.repository.save(this.mapper.toEntity(personaje));
     }
 
     @Override
     @Transactional
-    public Personaje update(Long id, Personaje personaje) {
+    public Personaje update(Long id, PersonajeDTO personaje) {
 
         Personaje personajeUpdate = this.repository.findById(id).orElse(null);
 

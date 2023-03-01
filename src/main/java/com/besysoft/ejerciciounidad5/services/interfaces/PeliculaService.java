@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PeliculaService {
 
-    Pelicula save(Pelicula pelicula);
+    Pelicula save(PeliculaDTO pelicula);
 
     List<PeliculaDTO> findAll();
 
@@ -20,6 +20,6 @@ public interface PeliculaService {
 
     PeliculaDTO findById(Long id);
 
-    Pelicula update(Long id, Pelicula pelicula);
+    Pelicula update(Long id, PeliculaDTO pelicula);
 
 }

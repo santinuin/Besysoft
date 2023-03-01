@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface PersonajeMapper {
 
-    Personaje toEntidad(PersonajeDTO dto);
+    Personaje toEntity(PersonajeDTO dto);
     List<Personaje> toEntityList(List<PersonajeDTO> dtoList);
 
     @InheritInverseConfiguration

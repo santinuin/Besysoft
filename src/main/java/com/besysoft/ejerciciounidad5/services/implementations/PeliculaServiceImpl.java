@@ -61,18 +61,18 @@ public class PeliculaServiceImpl extends GenericService<Pelicula, PeliculaDTO> i
 
     @Override
     @Transactional
-    public Pelicula save(Pelicula pelicula) {
+    public Pelicula save(PeliculaDTO pelicula) {
 
         if (!this.repository.findByTituloIgnoreCase(pelicula.getTitulo()).isEmpty()) {
             return null;
         }
 
-        return this.repository.save(pelicula);
+        return this.repository.save(this.mapper.toEntity(pelicula));
     }
 
     @Override
     @Transactional
-    public Pelicula update(Long id, Pelicula pelicula) {
+    public Pelicula update(Long id, PeliculaDTO pelicula) {
 
         Pelicula peliculaUpdate = this.repository.findById(id).orElse(null);
 
