@@ -16,7 +16,7 @@ import java.util.Map;
 @RequestMapping("/genero")
 public class GeneroController {
 
-    private Logger logger = LoggerFactory.getLogger(GeneroController.class);
+    private static final Logger logger = LoggerFactory.getLogger(GeneroController.class);
 
     private final GeneroService service;
 

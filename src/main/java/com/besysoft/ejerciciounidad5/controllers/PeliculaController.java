@@ -19,7 +19,7 @@ import java.util.Map;
 @RequestMapping("/peliculas")
 public class PeliculaController {
 
-    private Logger logger = LoggerFactory.getLogger(PeliculaController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PeliculaController.class);
 
     private final PeliculaService peliculaService;
 

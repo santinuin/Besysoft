@@ -17,15 +17,12 @@ import java.util.Map;
 @RequestMapping("/personajes")
 public class PersonajeController {
 
-    private Logger logger = LoggerFactory.getLogger(PersonajeController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PersonajeController.class);
 
     private final PersonajeService service;
 
-    private final PeliculaService peliculaService;
-
-    public PersonajeController(PersonajeService service, PeliculaService peliculaService) {
+    public PersonajeController(PersonajeService service) {
         this.service = service;
-        this.peliculaService = peliculaService;
     }
 
     @GetMapping
