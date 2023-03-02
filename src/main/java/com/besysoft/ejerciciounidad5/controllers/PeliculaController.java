@@ -3,6 +3,8 @@ package com.besysoft.ejerciciounidad5.controllers;
 import com.besysoft.ejerciciounidad5.dto.PeliculaDTO;
 import com.besysoft.ejerciciounidad5.services.interfaces.GeneroService;
 import com.besysoft.ejerciciounidad5.services.interfaces.PeliculaService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/peliculas")
 public class PeliculaController {
+
+    private Logger logger = LoggerFactory.getLogger(PeliculaController.class);
 
     private final PeliculaService peliculaService;
 

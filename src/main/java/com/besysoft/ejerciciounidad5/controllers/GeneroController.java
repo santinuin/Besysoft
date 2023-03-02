@@ -1,8 +1,9 @@
 package com.besysoft.ejerciciounidad5.controllers;
 
-import com.besysoft.ejerciciounidad5.domain.entity.Genero;
 import com.besysoft.ejerciciounidad5.dto.GeneroDTO;
 import com.besysoft.ejerciciounidad5.services.interfaces.GeneroService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/genero")
 public class GeneroController {
+
+    private Logger logger = LoggerFactory.getLogger(GeneroController.class);
 
     private final GeneroService service;
 

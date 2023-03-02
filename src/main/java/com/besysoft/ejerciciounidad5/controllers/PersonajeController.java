@@ -3,6 +3,8 @@ package com.besysoft.ejerciciounidad5.controllers;
 import com.besysoft.ejerciciounidad5.dto.PersonajeDTO;
 import com.besysoft.ejerciciounidad5.services.interfaces.PeliculaService;
 import com.besysoft.ejerciciounidad5.services.interfaces.PersonajeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/personajes")
 public class PersonajeController {
+
+    private Logger logger = LoggerFactory.getLogger(PersonajeController.class);
 
     private final PersonajeService service;
 
