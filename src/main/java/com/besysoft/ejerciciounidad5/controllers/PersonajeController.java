@@ -1,7 +1,6 @@
 package com.besysoft.ejerciciounidad5.controllers;
 
 import com.besysoft.ejerciciounidad5.dto.PersonajeDTO;
-import com.besysoft.ejerciciounidad5.services.interfaces.PeliculaService;
 import com.besysoft.ejerciciounidad5.services.interfaces.PersonajeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,3 @@
-/*
 package com.besysoft.ejerciciounidad5.repositories.memory;
 
 import com.besysoft.ejerciciounidad5.domain.entity.Pelicula;
@@ -80,4 +79,3 @@ public class PersonajeRepositoryImpl extends GenericRepository<Personaje> implem
 
     }
 }
-*/

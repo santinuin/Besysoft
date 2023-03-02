@@ -1,4 +1,3 @@
-/*
 package com.besysoft.ejerciciounidad5.repositories.memory;
 
 import com.besysoft.ejerciciounidad5.domain.entity.Genero;
@@ -67,4 +66,3 @@ public class GeneroRepositoryImpl extends GenericRepository<Genero> implements G
     }
 
 }
-*/

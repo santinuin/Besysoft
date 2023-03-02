@@ -1,4 +1,4 @@
-/*package com.besysoft.ejerciciounidad5.repositories.memory;
+package com.besysoft.ejerciciounidad5.repositories.memory;
 
 import com.besysoft.ejerciciounidad5.domain.entity.Pelicula;
 import com.besysoft.ejerciciounidad5.domain.entity.Personaje;
@@ -66,4 +66,4 @@ public class PeliculaRepositoryImpl extends GenericRepository<Pelicula> implemen
                 .findFirst()
                 .orElseThrow();
     }
-}*/
+}
