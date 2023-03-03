@@ -22,6 +22,14 @@ public class PeliculaDTO {
     public PeliculaDTO() {
     }
 
+    public PeliculaDTO(long id, String titulo, Date fechaDeCreacion, Integer calificacion, List<Personaje> personajes) {
+        this.id = id;
+        this.titulo = titulo;
+        this.fechaDeCreacion = fechaDeCreacion;
+        this.calificacion = calificacion;
+        this.personajes = personajes;
+    }
+
     public long getId() {
         return id;
     }

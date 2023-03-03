@@ -19,6 +19,15 @@ public class PersonajeDTO {
     public PersonajeDTO() {
     }
 
+    public PersonajeDTO(Long id, String nombre, Integer edad, Integer peso, String historia, Pelicula pelicula) {
+        this.id = id;
+        this.nombre = nombre;
+        this.edad = edad;
+        this.peso = peso;
+        this.historia = historia;
+        this.pelicula = pelicula;
+    }
+
     public Long getId() {
         return id;
     }

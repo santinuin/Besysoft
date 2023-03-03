@@ -15,6 +15,12 @@ public class GeneroDTO {
     public GeneroDTO() {
     }
 
+    public GeneroDTO(Long id, String nombre, List<Pelicula> peliculas) {
+        this.id = id;
+        this.nombre = nombre;
+        this.peliculas = peliculas;
+    }
+
     public Long getId() {
         return id;
     }
