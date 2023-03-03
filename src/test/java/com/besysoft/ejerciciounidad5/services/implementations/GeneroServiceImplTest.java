@@ -7,6 +7,7 @@ import com.besysoft.ejerciciounidad5.repositories.database.GeneroRepository;
 import com.besysoft.ejerciciounidad5.repositories.database.PeliculaRepository;
 import com.besysoft.ejerciciounidad5.services.interfaces.GeneroService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -39,16 +40,20 @@ class GeneroServiceImplTest {
     }
 
     @Test
+    @DisplayName("Buscar generos y devolver como DTOs")
     void findAll() {
         when(repository.findAll()).thenReturn(GENEROS);
 
         List<GeneroDTO> generosDTO = service.findAll();
 
-        //Verificar que sea un DTO
+        assertThat(generosDTO.equals(GENEROS_DTO));
     }
 
     @Test
+    @DisplayName("Buscar peliculas por nombre de genero y devolver como DTOs")
     void findPeliculasByGeneroNombre() {
+        when(repository.findByNombreIgnoreCase("terror").getPeliculas()).thenReturn(List.of(PEL));
+
     }
 
     @Test
@@ -56,9 +61,9 @@ class GeneroServiceImplTest {
         when(repository.findById(1L)).thenReturn(Optional.of(GENERO_1));
         when(mapper.toDTO(GENERO_1)).thenReturn(GENERO_DTO_1);
 
-        GeneroDTO byId = service.findById(1L);
+        GeneroDTO generoById = service.findById(1L);
 
-        assertThat(byId.equals(GENERO_DTO_1));
+        assertThat(generoById.equals(GENERO_DTO_1));
     }
 
     @Test
