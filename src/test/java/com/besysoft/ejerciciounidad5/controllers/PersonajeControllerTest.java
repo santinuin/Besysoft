@@ -1,12 +1,8 @@
 package com.besysoft.ejerciciounidad5.controllers;
 
-import com.besysoft.ejerciciounidad5.domain.entity.Pelicula;
 import com.besysoft.ejerciciounidad5.domain.entity.Personaje;
-import com.besysoft.ejerciciounidad5.dto.PeliculaDTO;
 import com.besysoft.ejerciciounidad5.dto.PersonajeDTO;
-import com.besysoft.ejerciciounidad5.services.interfaces.GeneroService;
 import com.besysoft.ejerciciounidad5.services.interfaces.PersonajeService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,9 +17,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.List;
 
 import static com.besysoft.ejerciciounidad5.Data.LoadData.*;
-import static com.besysoft.ejerciciounidad5.Data.LoadData.PELICULA_DTO_7;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
