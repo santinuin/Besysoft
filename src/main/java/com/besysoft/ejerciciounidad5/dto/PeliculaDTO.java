@@ -80,8 +80,6 @@ public class PeliculaDTO {
 
         if (id != that.id) return false;
         if (!Objects.equals(titulo, that.titulo)) return false;
-        if (fechaDeCreacion.compareTo(that.fechaDeCreacion) != 0 )
-            return false;
         return Objects.equals(calificacion, that.calificacion);
     }
 
