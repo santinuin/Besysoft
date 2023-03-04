@@ -55,7 +55,13 @@ public class PersonajeServiceImpl extends GenericService<Personaje, PersonajeDTO
 
     @Override
     @Transactional(readOnly = true)
-    public PersonajeDTO findById(Long id) {
+    public PersonajeDTO findById(Long id) throws IdNotFoundException {
+
+        if(this.repository.findById(id).isEmpty()){
+            throw new IdNotFoundException("Error: no se encontró, el personaje ID: "
+                    .concat(id.toString().concat(" no existe.")));
+        }
+
         return this.mapper.toDTO(this.repository.findById(id).orElse(null));
     }
 

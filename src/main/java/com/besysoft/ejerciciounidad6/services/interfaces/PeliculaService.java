@@ -2,6 +2,7 @@ package com.besysoft.ejerciciounidad6.services.interfaces;
 
 import com.besysoft.ejerciciounidad6.domain.entity.Pelicula;
 import com.besysoft.ejerciciounidad6.dto.PeliculaDTO;
+import com.besysoft.ejerciciounidad6.excepciones.IdNotFoundException;
 
 import java.util.Date;
 import java.util.List;
@@ -18,8 +19,8 @@ public interface PeliculaService {
 
     List<PeliculaDTO> findByCalificacionBetween(Integer desde, Integer hasta);
 
-    PeliculaDTO findById(Long id);
+    PeliculaDTO findById(Long id) throws IdNotFoundException;;
 
-    Pelicula update(Long id, PeliculaDTO pelicula);
+    Pelicula update(Long id, PeliculaDTO pelicula) throws IdNotFoundException;
 
 }

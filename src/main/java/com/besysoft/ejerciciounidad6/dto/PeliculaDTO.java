@@ -23,7 +23,6 @@ public class PeliculaDTO {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date fechaDeCreacion;
 
-    @Size(min = 1, max = 5)
     private Integer calificacion;
 
     private List<Personaje> personajes;

@@ -4,6 +4,8 @@ import com.besysoft.ejerciciounidad6.domain.entity.Pelicula;
 import com.besysoft.ejerciciounidad6.domain.entity.Personaje;
 import com.besysoft.ejerciciounidad6.dto.PeliculaDTO;
 import com.besysoft.ejerciciounidad6.dto.mapper.PeliculaMapper;
+import com.besysoft.ejerciciounidad6.excepciones.IdNotFoundException;
+import com.besysoft.ejerciciounidad6.excepciones.ObjectAlreadyExistException;
 import com.besysoft.ejerciciounidad6.repositories.database.PeliculaRepository;
 import com.besysoft.ejerciciounidad6.repositories.database.PersonajeRepository;
 import com.besysoft.ejerciciounidad6.services.interfaces.PeliculaService;
@@ -55,7 +57,13 @@ public class PeliculaServiceImpl extends GenericService<Pelicula, PeliculaDTO> i
 
     @Override
     @Transactional(readOnly = true)
-    public PeliculaDTO findById(Long id) {
+    public PeliculaDTO findById(Long id) throws IdNotFoundException {
+
+        if(this.repository.findById(id).isEmpty()){
+            throw new IdNotFoundException("Error: no se encontró, la pelicula ID: "
+                    .concat(id.toString().concat(" no existe.")));
+        }
+
         return this.mapper.toDTO(this.repository.findById(id).orElse(null));
     }
 
@@ -63,8 +71,11 @@ public class PeliculaServiceImpl extends GenericService<Pelicula, PeliculaDTO> i
     @Transactional
     public Pelicula save(PeliculaDTO pelicula) {
 
-        if (!this.repository.findByTituloIgnoreCase(pelicula.getTitulo()).isEmpty()) {
-            return null;
+        List<Pelicula> peliculaList = this.repository.findByTituloIgnoreCase(pelicula.getTitulo());
+
+        if (!peliculaList.isEmpty()) {
+            throw new ObjectAlreadyExistException(
+                    String.format("La pelicula %s ya existe", pelicula.getTitulo()));
         }
 
         return this.repository.save(this.mapper.toEntity(pelicula));
@@ -72,9 +83,14 @@ public class PeliculaServiceImpl extends GenericService<Pelicula, PeliculaDTO> i
 
     @Override
     @Transactional
-    public Pelicula update(Long id, PeliculaDTO pelicula) {
+    public Pelicula update(Long id, PeliculaDTO pelicula) throws IdNotFoundException {
 
         Pelicula peliculaUpdate = this.repository.findById(id).orElse(null);
+
+        if(this.repository.findById(id).isEmpty()){
+            throw new IdNotFoundException("Error: no se pudo editar, la pelicula ID: "
+                    .concat(id.toString().concat(" no existe.")));
+        }
 
         if (!pelicula.getTitulo().equals(peliculaUpdate.getTitulo())) {
             peliculaUpdate.setTitulo(pelicula.getTitulo());
