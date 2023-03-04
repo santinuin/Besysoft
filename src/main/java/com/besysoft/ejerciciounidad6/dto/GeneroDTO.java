@@ -2,6 +2,10 @@ package com.besysoft.ejerciciounidad6.dto;
 
 import com.besysoft.ejerciciounidad6.domain.entity.Pelicula;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,6 +13,9 @@ public class GeneroDTO {
 
     private Long id;
 
+    @NotNull(message = "Nombre no puede ser nulo")
+    @NotEmpty(message = "Nombre no puede estar vacio")
+    @NotBlank(message = "Nombre no puede estar vacio")
     private String nombre;
 
     private List<Pelicula> peliculas;

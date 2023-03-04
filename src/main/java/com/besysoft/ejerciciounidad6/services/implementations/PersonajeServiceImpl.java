@@ -4,6 +4,8 @@ import com.besysoft.ejerciciounidad6.domain.entity.Pelicula;
 import com.besysoft.ejerciciounidad6.domain.entity.Personaje;
 import com.besysoft.ejerciciounidad6.dto.PersonajeDTO;
 import com.besysoft.ejerciciounidad6.dto.mapper.PersonajeMapper;
+import com.besysoft.ejerciciounidad6.excepciones.IdNotFoundException;
+import com.besysoft.ejerciciounidad6.excepciones.ObjectAlreadyExistException;
 import com.besysoft.ejerciciounidad6.repositories.database.PeliculaRepository;
 import com.besysoft.ejerciciounidad6.repositories.database.PersonajeRepository;
 import com.besysoft.ejerciciounidad6.services.interfaces.PersonajeService;
@@ -64,7 +66,8 @@ public class PersonajeServiceImpl extends GenericService<Personaje, PersonajeDTO
         List<Personaje> personajesList = this.repository.findByNombreIgnoreCase(personaje.getNombre());
 
         if (!personajesList.isEmpty()) {
-            return null;
+            throw new ObjectAlreadyExistException(
+                    String.format("El personaje %s ya existe", personaje.getNombre()));
         }
 
         return this.repository.save(this.mapper.toEntity(personaje));
@@ -72,9 +75,13 @@ public class PersonajeServiceImpl extends GenericService<Personaje, PersonajeDTO
 
     @Override
     @Transactional
-    public Personaje update(Long id, PersonajeDTO personaje) {
+    public Personaje update(Long id, PersonajeDTO personaje) throws IdNotFoundException {
 
         Personaje personajeUpdate = this.repository.findById(id).orElse(null);
+        if(this.repository.findById(id).isEmpty()){
+            throw new IdNotFoundException("Error: no se pudo editar, el personaje ID: "
+                    .concat(id.toString().concat(" no existe.")));
+        }
 
         if (!personaje.getNombre().equals(personajeUpdate.getNombre())) {
             personajeUpdate.setNombre(personaje.getNombre());

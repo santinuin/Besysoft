@@ -6,6 +6,8 @@ import com.besysoft.ejerciciounidad6.dto.GeneroDTO;
 import com.besysoft.ejerciciounidad6.dto.PeliculaDTO;
 import com.besysoft.ejerciciounidad6.dto.mapper.GeneroMapper;
 import com.besysoft.ejerciciounidad6.dto.mapper.PeliculaMapper;
+import com.besysoft.ejerciciounidad6.excepciones.IdNotFoundException;
+import com.besysoft.ejerciciounidad6.excepciones.ObjectAlreadyExistException;
 import com.besysoft.ejerciciounidad6.repositories.database.GeneroRepository;
 import com.besysoft.ejerciciounidad6.repositories.database.PeliculaRepository;
 import com.besysoft.ejerciciounidad6.services.interfaces.GeneroService;
@@ -48,7 +50,13 @@ public class GeneroServiceImpl extends GenericService<Genero, GeneroDTO> impleme
 
     @Override
     @Transactional(readOnly = true)
-    public GeneroDTO findById(Long id) {
+    public GeneroDTO findById(Long id) throws IdNotFoundException {
+
+        if(this.repository.findById(id).isEmpty()){
+            throw new IdNotFoundException("Error: no se encontró, el genero ID: "
+                    .concat(id.toString().concat(" no existe.")));
+        }
+
         return this.mapper.toDTO(this.repository.findById(id).orElse(null));
     }
 
@@ -59,7 +67,8 @@ public class GeneroServiceImpl extends GenericService<Genero, GeneroDTO> impleme
         Optional<Genero> oGenero = Optional.ofNullable(this.repository.findByNombreIgnoreCase(genero.getNombre()));
 
         if (oGenero.isPresent()) {
-            return null;
+            throw new ObjectAlreadyExistException(
+                    String.format("El genero %s ya existe", genero.getNombre()));
         }
 
         return this.repository.save(this.mapper.toEntity(genero));
@@ -67,9 +76,14 @@ public class GeneroServiceImpl extends GenericService<Genero, GeneroDTO> impleme
 
     @Override
     @Transactional
-    public Genero update(Long id, GeneroDTO genero) {
+    public Genero update(Long id, GeneroDTO genero) throws IdNotFoundException {
 
         Genero generoUpdate = this.repository.findById(id).orElse(null);
+
+        if(this.repository.findById(id).isEmpty()){
+            throw new IdNotFoundException("Error: no se pudo editar, el genero ID: "
+                            .concat(id.toString().concat(" no existe.")));
+        }
 
         if (!genero.getNombre().equals(generoUpdate.getNombre())) {
             generoUpdate.setNombre(genero.getNombre());

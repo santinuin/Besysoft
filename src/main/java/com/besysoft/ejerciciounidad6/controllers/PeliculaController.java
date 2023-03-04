@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -111,7 +113,7 @@ public class PeliculaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updatePelicula(@PathVariable Long id,
+    public ResponseEntity<?> updatePelicula(@NotNull @NotBlank @PathVariable Long id,
                                             @RequestBody PeliculaDTO pelicula) {
 
         Map<String, Object> response = new HashMap<>();

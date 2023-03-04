@@ -3,6 +3,10 @@ package com.besysoft.ejerciciounidad6.dto;
 import com.besysoft.ejerciciounidad6.domain.entity.Personaje;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -11,11 +15,15 @@ public class PeliculaDTO {
 
     private long id;
 
+    @NotNull(message = "Nombre no puede ser nulo")
+    @NotEmpty(message = "Nombre no puede estar vacio")
+    @NotBlank(message = "Nombre no puede estar vacio")
     private String titulo;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date fechaDeCreacion;
 
+    @Size(min = 1, max = 5)
     private Integer calificacion;
 
     private List<Personaje> personajes;

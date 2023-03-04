@@ -1,13 +1,17 @@
 package com.besysoft.ejerciciounidad6.controllers;
 
 import com.besysoft.ejerciciounidad6.dto.PersonajeDTO;
+import com.besysoft.ejerciciounidad6.excepciones.IdNotFoundException;
+import com.besysoft.ejerciciounidad6.excepciones.ObjectAlreadyExistException;
 import com.besysoft.ejerciciounidad6.services.interfaces.PersonajeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,22 +56,23 @@ public class PersonajeController {
     }
 
     @PostMapping
-    public ResponseEntity<?> savePersonaje(@RequestBody PersonajeDTO personaje) {
+    public ResponseEntity<?> savePersonaje(@Valid @RequestBody PersonajeDTO personaje, BindingResult result) {
 
         Map<String, Object> response = new HashMap<>();
 
-        if (personaje.getNombre() == null || personaje.getNombre().isBlank()) {
+        Map<String, Object> validaciones = new HashMap<>();
+        if(result.hasErrors()){
+            result.getFieldErrors()
+                    .forEach(error -> validaciones.put(error.getField(), error.getDefaultMessage()));
 
-            response.put("succes", Boolean.FALSE);
-            response.put("mensaje", "El campo nombre no puede estar vacío");
-
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-
+            return new ResponseEntity<>(validaciones, HttpStatus.BAD_REQUEST);
         }
 
-        if (this.service.save(personaje) == null) {
+        try {
+            this.service.save(personaje);
+        }catch (ObjectAlreadyExistException e){
             response.put("succes", Boolean.FALSE);
-            response.put("mensaje", "El personaje " + personaje.getNombre() + " ya existe");
+            response.put("mensaje", e.getMessage());
 
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
@@ -75,36 +80,33 @@ public class PersonajeController {
         response.put("succes", Boolean.TRUE);
         response.put("mensaje", "¡El personaje " + personaje.getNombre() + " ha sido creado con éxito!");
 
-        this.service.save(personaje);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePersonaje(@PathVariable Long id,
-                                             @RequestBody PersonajeDTO personaje) {
+                                             @Valid @RequestBody PersonajeDTO personaje, BindingResult result) {
 
         Map<String, Object> response = new HashMap<>();
 
-        if (this.service.findById(id) == null) {
+        Map<String, Object> validaciones = new HashMap<>();
+        if(result.hasErrors()){
+            result.getFieldErrors()
+                    .forEach(error -> validaciones.put(error.getField(), error.getDefaultMessage()));
+
+            return new ResponseEntity<>(validaciones, HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            this.service.update(id, personaje);
+        } catch (IdNotFoundException e) {
 
             response.put("succes", Boolean.FALSE);
-            response.put("mensaje", "Error: no se pudo editar, el personaje ID: "
-                    .concat(id.toString().concat(" no existe")));
+            response.put("mensaje", e.getMessage());
 
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-
-        if (personaje.getNombre() == null || personaje.getNombre().isBlank()) {
-
-            response.put("succes", Boolean.FALSE);
-            response.put("mensaje", "El campo nombre no puede estar vacío");
-
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-
-        }
-
-        this.service.update(id, personaje);
 
         response.put("succes", Boolean.TRUE);
         response.put("mensaje", "¡El personaje " + personaje.getNombre() + " ha sido actualizado con éxito!");
