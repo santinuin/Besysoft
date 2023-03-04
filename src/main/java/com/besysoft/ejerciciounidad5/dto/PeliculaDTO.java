@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class PeliculaDTO {
 
@@ -68,5 +69,28 @@ public class PeliculaDTO {
 
     public void setPersonajes(List<Personaje> personajes) {
         this.personajes = personajes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PeliculaDTO that = (PeliculaDTO) o;
+
+        if (id != that.id) return false;
+        if (!Objects.equals(titulo, that.titulo)) return false;
+        if (fechaDeCreacion.compareTo(that.fechaDeCreacion) != 0 )
+            return false;
+        return Objects.equals(calificacion, that.calificacion);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (titulo != null ? titulo.hashCode() : 0);
+        result = 31 * result + (fechaDeCreacion != null ? fechaDeCreacion.hashCode() : 0);
+        result = 31 * result + (calificacion != null ? calificacion.hashCode() : 0);
+        return result;
     }
 }

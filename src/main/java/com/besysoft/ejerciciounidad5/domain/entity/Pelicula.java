@@ -1,5 +1,6 @@
 package com.besysoft.ejerciciounidad5.domain.entity;
 
+import com.besysoft.ejerciciounidad5.dto.PeliculaDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
@@ -80,4 +81,5 @@ public class Pelicula implements Serializable {
     public void setPersonajes(List<Personaje> personajes) {
         this.personajes = personajes;
     }
+
 }

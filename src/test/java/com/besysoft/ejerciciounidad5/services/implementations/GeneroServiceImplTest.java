@@ -12,6 +12,9 @@ import com.besysoft.ejerciciounidad5.services.interfaces.GeneroService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,32 +24,30 @@ import static com.besysoft.ejerciciounidad5.Data.LoadData.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 class GeneroServiceImplTest {
 
+    @MockBean
     GeneroRepository repository;
+    @MockBean
     PeliculaRepository peliculaRepository;
 
+    @Autowired
     GeneroMapper mapper;
+    @Autowired
     PeliculaMapper peliculaMapper;
 
+    @Autowired
     GeneroService service;
 
     @BeforeEach
     void setUp() {
-        repository = mock(GeneroRepository.class);
-        peliculaRepository = mock(PeliculaRepository.class);
-
-        mapper = mock(GeneroMapper.class);
-        peliculaMapper = mock(PeliculaMapper.class);
-
-        service = new GeneroServiceImpl(repository, peliculaRepository, mapper, peliculaMapper);
     }
 
     @Test
-    @DisplayName("Buscar generos y devolver como DTOs")
+    @DisplayName("Buscar generos")
     void findAll() {
         when(repository.findAll()).thenReturn(GENEROS);
-        when(mapper.toDTOList(GENEROS)).thenReturn(GENEROS_DTO);
 
         List<GeneroDTO> result = service.findAll();
 
@@ -54,13 +55,12 @@ class GeneroServiceImplTest {
     }
 
     @Test
-    @DisplayName("Buscar peliculas por nombre de genero y devolver como DTOs")
+    @DisplayName("Buscar peliculas por nombre de genero")
     void findPeliculasByGeneroNombre() {
 
         String nombreGenero = "terror";
         List<PeliculaDTO> peliculasTerror = List.of(PELICULA_DTO_4, PELICULA_DTO_5, PELICULA_DTO_6);
         when(repository.findByNombreIgnoreCase(nombreGenero)).thenReturn(GENERO_2);
-        when(peliculaMapper.toDTOList(GENERO_2.getPeliculas())).thenReturn(peliculasTerror);
 
         List<PeliculaDTO> result = service.findPeliculasByGeneroNombre("terror");
 
@@ -72,10 +72,9 @@ class GeneroServiceImplTest {
     }
 
     @Test
-    @DisplayName("Buscar Generos por ID ")
+    @DisplayName("Buscar genero por ID")
     void findById() {
         when(repository.findById(1L)).thenReturn(Optional.of(GENERO_1));
-        when(mapper.toDTO(GENERO_1)).thenReturn(GENERO_DTO_1);
 
         GeneroDTO result = service.findById(1L);
 
@@ -83,24 +82,22 @@ class GeneroServiceImplTest {
     }
 
     @Test
-    @DisplayName("Guardar un genero")
+    @DisplayName("Guardar genero")
     void save() {
 
-        GeneroDTO nuevoGeneroDTO = new GeneroDTO(6L, "Cs. Ficcion", List.of(PELICULA_10));
-        Genero nuevoGenero = new Genero(6L, "Cs. Ficcion", List.of(PELICULA_10));
-        when(repository.findByNombreIgnoreCase("Cs. Ficcion")).thenReturn(null);
-        when(mapper.toEntity(nuevoGeneroDTO)).thenReturn(nuevoGenero);
-        when(repository.save(nuevoGenero)).thenReturn(nuevoGenero);
+        GeneroDTO generoDTO = new GeneroDTO();
+        generoDTO.setNombre("Drama");
+        Genero generoGuardado = new Genero();
+        generoGuardado.setId(1L);
+        generoGuardado.setNombre("Drama");
+        when(repository.findByNombreIgnoreCase(generoDTO.getNombre())).thenReturn(null);
+        when(repository.save(any())).thenReturn(generoGuardado);
 
-        Genero result = service.save(nuevoGeneroDTO);
+        Genero result = service.save(generoDTO);
 
-        verify(repository, times(1)).findByNombreIgnoreCase("Cs. Ficcion");
-        verify(mapper, times(1)).toEntity(nuevoGeneroDTO);
-        verify(repository, times(1)).save(nuevoGenero);
-        assertEquals(nuevoGeneroDTO.getId(), nuevoGenero.getId());
-        assertEquals(nuevoGeneroDTO.getNombre(), nuevoGenero.getNombre());
-        assertEquals(nuevoGeneroDTO.getPeliculas(), nuevoGenero.getPeliculas());
-        assertEquals(nuevoGenero, result);
+        assertNotNull(result);
+        assertEquals(generoGuardado.getId(), result.getId());
+        assertEquals(generoGuardado.getNombre(), result.getNombre());
 
     }
 

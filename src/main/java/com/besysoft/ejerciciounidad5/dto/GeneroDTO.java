@@ -3,6 +3,7 @@ package com.besysoft.ejerciciounidad5.dto;
 import com.besysoft.ejerciciounidad5.domain.entity.Pelicula;
 
 import java.util.List;
+import java.util.Objects;
 
 public class GeneroDTO {
 
@@ -43,5 +44,23 @@ public class GeneroDTO {
 
     public void setPeliculas(List<Pelicula> peliculas) {
         this.peliculas = peliculas;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GeneroDTO generoDTO = (GeneroDTO) o;
+
+        if (!Objects.equals(id, generoDTO.id)) return false;
+        return Objects.equals(nombre, generoDTO.nombre);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
+        return result;
     }
 }

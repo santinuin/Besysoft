@@ -2,6 +2,8 @@ package com.besysoft.ejerciciounidad5.dto;
 
 import com.besysoft.ejerciciounidad5.domain.entity.Pelicula;
 
+import java.util.Objects;
+
 public class PersonajeDTO {
 
     private Long id;
@@ -74,5 +76,29 @@ public class PersonajeDTO {
 
     public void setPelicula(Pelicula pelicula) {
         this.pelicula = pelicula;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PersonajeDTO that = (PersonajeDTO) o;
+
+        if (!Objects.equals(id, that.id)) return false;
+        if (!Objects.equals(nombre, that.nombre)) return false;
+        if (!Objects.equals(edad, that.edad)) return false;
+        if (!Objects.equals(peso, that.peso)) return false;
+        return Objects.equals(historia, that.historia);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
+        result = 31 * result + (edad != null ? edad.hashCode() : 0);
+        result = 31 * result + (peso != null ? peso.hashCode() : 0);
+        result = 31 * result + (historia != null ? historia.hashCode() : 0);
+        return result;
     }
 }
