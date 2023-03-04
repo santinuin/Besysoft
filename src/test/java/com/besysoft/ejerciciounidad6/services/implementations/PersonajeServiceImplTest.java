@@ -3,7 +3,7 @@ package com.besysoft.ejerciciounidad6.services.implementations;
 import com.besysoft.ejerciciounidad6.domain.entity.Personaje;
 import com.besysoft.ejerciciounidad6.dto.PersonajeDTO;
 import com.besysoft.ejerciciounidad6.dto.mapper.PersonajeMapper;
-import com.besysoft.ejerciciounidad6.excepciones.IdNotFoundException;
+import com.besysoft.ejerciciounidad6.exceptions.IdNotFoundException;
 import com.besysoft.ejerciciounidad6.repositories.database.PeliculaRepository;
 import com.besysoft.ejerciciounidad6.repositories.database.PersonajeRepository;
 import com.besysoft.ejerciciounidad6.services.interfaces.PersonajeService;

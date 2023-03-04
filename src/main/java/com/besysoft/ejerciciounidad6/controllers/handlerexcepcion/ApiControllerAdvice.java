@@ -1,7 +1,7 @@
 package com.besysoft.ejerciciounidad6.controllers.handlerexcepcion;
 
 import com.besysoft.ejerciciounidad6.dto.respose.ExceptionDTO;
-import com.besysoft.ejerciciounidad6.excepciones.ObjectAlreadyExistException;
+import com.besysoft.ejerciciounidad6.exceptions.ObjectAlreadyExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;

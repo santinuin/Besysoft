@@ -1,4 +1,4 @@
-package com.besysoft.ejerciciounidad6.excepciones;
+package com.besysoft.ejerciciounidad6.exceptions;
 
 public class IdNotFoundException extends Exception{
 

@@ -3,7 +3,7 @@ package com.besysoft.ejerciciounidad6.services.interfaces;
 import com.besysoft.ejerciciounidad6.domain.entity.Genero;
 import com.besysoft.ejerciciounidad6.dto.GeneroDTO;
 import com.besysoft.ejerciciounidad6.dto.PeliculaDTO;
-import com.besysoft.ejerciciounidad6.excepciones.IdNotFoundException;
+import com.besysoft.ejerciciounidad6.exceptions.IdNotFoundException;
 
 import java.util.List;
 

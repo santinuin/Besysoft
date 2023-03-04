@@ -2,7 +2,7 @@ package com.besysoft.ejerciciounidad6.services.interfaces;
 
 import com.besysoft.ejerciciounidad6.domain.entity.Personaje;
 import com.besysoft.ejerciciounidad6.dto.PersonajeDTO;
-import com.besysoft.ejerciciounidad6.excepciones.IdNotFoundException;
+import com.besysoft.ejerciciounidad6.exceptions.IdNotFoundException;
 
 import java.util.List;
 

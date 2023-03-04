@@ -1,10 +1,12 @@
 package com.besysoft.ejerciciounidad6.controllers;
 
 import com.besysoft.ejerciciounidad6.dto.PeliculaDTO;
-import com.besysoft.ejerciciounidad6.excepciones.IdNotFoundException;
-import com.besysoft.ejerciciounidad6.excepciones.ObjectAlreadyExistException;
+import com.besysoft.ejerciciounidad6.exceptions.IdNotFoundException;
+import com.besysoft.ejerciciounidad6.exceptions.ObjectAlreadyExistException;
 import com.besysoft.ejerciciounidad6.services.interfaces.GeneroService;
 import com.besysoft.ejerciciounidad6.services.interfaces.PeliculaService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,6 +22,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/peliculas")
+@Api(value = "PeliculaController", tags = "Acciones disponibles para Pelicula")
 public class PeliculaController {
 
     private static final Logger logger = LoggerFactory.getLogger(PeliculaController.class);
@@ -34,6 +37,7 @@ public class PeliculaController {
     }
 
     @GetMapping()
+    @ApiOperation(value = "Devuelve todas las peliculas, y podemos filtrar por titulo o genero")
     public ResponseEntity<List<PeliculaDTO>> findAll(@RequestParam(required = false) String titulo,
                                                      @RequestParam(required = false) String genero) {
 
@@ -45,6 +49,7 @@ public class PeliculaController {
     }
 
     @GetMapping("/fechas")
+    @ApiOperation(value = "Devuelve todas las peliculas entre dos fechas ")
     public ResponseEntity<?> findByDateBetween(@DateTimeFormat(pattern = "ddMMyyyy") @RequestParam Date desde,
                                                @DateTimeFormat(pattern = "ddMMyyyy") @RequestParam Date hasta) {
 
@@ -62,6 +67,7 @@ public class PeliculaController {
     }
 
     @GetMapping("/calificacion")
+    @ApiOperation(value = "Devuelve todas las peliculas entre dos calificaciones ")
     public ResponseEntity<?> findByCalificacionBetween(@RequestParam Integer desde,
                                                        @RequestParam Integer hasta) {
 
@@ -87,6 +93,7 @@ public class PeliculaController {
     }
 
     @PostMapping
+    @ApiOperation(value = "Guarda una pelicula nueva")
     public ResponseEntity<?> savePelicula(@Valid @RequestBody PeliculaDTO pelicula/*, BindingResult result*/) {
 
         Map<String, Object> response = new HashMap<>();
@@ -108,6 +115,7 @@ public class PeliculaController {
     }
 
     @PutMapping("/{id}")
+    @ApiOperation(value = "Modifica una pelicula")
     public ResponseEntity<?> updatePelicula(@PathVariable Long id,
                                             @Valid @RequestBody PeliculaDTO pelicula) {
 

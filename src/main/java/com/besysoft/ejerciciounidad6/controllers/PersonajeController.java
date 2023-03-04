@@ -1,9 +1,11 @@
 package com.besysoft.ejerciciounidad6.controllers;
 
 import com.besysoft.ejerciciounidad6.dto.PersonajeDTO;
-import com.besysoft.ejerciciounidad6.excepciones.IdNotFoundException;
-import com.besysoft.ejerciciounidad6.excepciones.ObjectAlreadyExistException;
+import com.besysoft.ejerciciounidad6.exceptions.IdNotFoundException;
+import com.besysoft.ejerciciounidad6.exceptions.ObjectAlreadyExistException;
 import com.besysoft.ejerciciounidad6.services.interfaces.PersonajeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/personajes")
+@Api(value = "PersonajeController", tags = "Acciones disponibles para Personaje")
 public class PersonajeController {
 
     private static final Logger logger = LoggerFactory.getLogger(PersonajeController.class);
@@ -28,6 +31,7 @@ public class PersonajeController {
     }
 
     @GetMapping
+    @ApiOperation(value = "Devuelve todos las personajes, y podemos filtrar por nombre o edad")
     public ResponseEntity<List<PersonajeDTO>> findAll(@RequestParam(required = false) String nombre,
                                                       @RequestParam(required = false) Integer edad) {
 
@@ -38,6 +42,7 @@ public class PersonajeController {
     }
 
     @GetMapping("/edad")
+    @ApiOperation(value = "Devuelve todas las personajes entre dos edades ")
     public ResponseEntity<?> findByEdadBetween(@RequestParam Integer desde,
                                                @RequestParam Integer hasta) {
 
@@ -55,6 +60,7 @@ public class PersonajeController {
     }
 
     @PostMapping
+    @ApiOperation(value = "Guarda un personaje nuevo")
     public ResponseEntity<?> savePersonaje(@Valid @RequestBody PersonajeDTO personaje) {
 
         Map<String, Object> response = new HashMap<>();
@@ -76,6 +82,7 @@ public class PersonajeController {
     }
 
     @PutMapping("/{id}")
+    @ApiOperation(value = "Modifica un personaje")
     public ResponseEntity<?> updatePersonaje(@PathVariable Long id,
                                              @Valid @RequestBody PersonajeDTO personaje) {
 

@@ -6,7 +6,7 @@ import com.besysoft.ejerciciounidad6.dto.GeneroDTO;
 import com.besysoft.ejerciciounidad6.dto.PeliculaDTO;
 import com.besysoft.ejerciciounidad6.dto.mapper.GeneroMapper;
 import com.besysoft.ejerciciounidad6.dto.mapper.PeliculaMapper;
-import com.besysoft.ejerciciounidad6.excepciones.IdNotFoundException;
+import com.besysoft.ejerciciounidad6.exceptions.IdNotFoundException;
 import com.besysoft.ejerciciounidad6.repositories.database.GeneroRepository;
 import com.besysoft.ejerciciounidad6.repositories.database.PeliculaRepository;
 import com.besysoft.ejerciciounidad6.services.interfaces.GeneroService;
