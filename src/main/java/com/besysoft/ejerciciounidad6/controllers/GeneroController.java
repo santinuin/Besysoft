@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -34,17 +33,9 @@ public class GeneroController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveGenero(@Valid @RequestBody GeneroDTO genero, BindingResult result) {
+    public ResponseEntity<?> saveGenero(@Valid @RequestBody GeneroDTO genero) {
 
         Map<String, Object> response = new HashMap<>();
-
-        Map<String, Object> validaciones = new HashMap<>();
-        if(result.hasErrors()){
-            result.getFieldErrors()
-                    .forEach(error -> validaciones.put(error.getField(), error.getDefaultMessage()));
-
-            return new ResponseEntity<>(validaciones, HttpStatus.BAD_REQUEST);
-        }
 
         try{
             this.service.save(genero);
@@ -64,18 +55,9 @@ public class GeneroController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateGenero(@PathVariable Long id,
-                                          @Valid @RequestBody GeneroDTO genero, BindingResult result) throws IdNotFoundException {
+                                          @Valid @RequestBody GeneroDTO genero) throws IdNotFoundException {
 
         Map<String, Object> response = new HashMap<>();
-
-        Map<String, Object> validaciones = new HashMap<>();
-        if(result.hasErrors()){
-            result.getFieldErrors()
-                    .forEach(error -> validaciones.put(error.getField(), error.getDefaultMessage()));
-
-            return new ResponseEntity<>(validaciones, HttpStatus.BAD_REQUEST);
-        }
-
 
         try {
             this.service.update(id, genero);

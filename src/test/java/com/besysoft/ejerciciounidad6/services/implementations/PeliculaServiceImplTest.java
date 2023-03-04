@@ -4,6 +4,7 @@ import com.besysoft.ejerciciounidad6.domain.entity.Pelicula;
 import com.besysoft.ejerciciounidad6.domain.entity.Personaje;
 import com.besysoft.ejerciciounidad6.dto.PeliculaDTO;
 import com.besysoft.ejerciciounidad6.dto.mapper.PeliculaMapper;
+import com.besysoft.ejerciciounidad6.excepciones.IdNotFoundException;
 import com.besysoft.ejerciciounidad6.repositories.database.PeliculaRepository;
 import com.besysoft.ejerciciounidad6.repositories.database.PersonajeRepository;
 import com.besysoft.ejerciciounidad6.services.interfaces.PeliculaService;
@@ -103,7 +104,7 @@ class PeliculaServiceImplTest {
 
     @Test
     @DisplayName("Buscar pelicula por ID")
-    void findById() {
+    void findById() throws IdNotFoundException {
         Long id = 10L;
         when(repository.findById(id)).thenReturn(Optional.of(PELICULA_10));
 
@@ -132,7 +133,7 @@ class PeliculaServiceImplTest {
 
     @Test
     @DisplayName("Modificar pelicula")
-    void update() {
+    void update() throws IdNotFoundException {
 
             Long id = 1L;
             PeliculaDTO peliculaDTO = new PeliculaDTO();

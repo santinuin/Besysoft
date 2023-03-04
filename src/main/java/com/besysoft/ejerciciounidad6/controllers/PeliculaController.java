@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -88,31 +87,10 @@ public class PeliculaController {
     }
 
     @PostMapping
-    public ResponseEntity<?> savePelicula(@Valid @RequestBody PeliculaDTO pelicula, BindingResult result) {
+    public ResponseEntity<?> savePelicula(@Valid @RequestBody PeliculaDTO pelicula/*, BindingResult result*/) {
 
         Map<String, Object> response = new HashMap<>();
 
-        Map<String, Object> validaciones = new HashMap<>();
-        if (result.hasErrors()) {
-            result.getFieldErrors()
-                    .forEach(error -> validaciones.put(error.getField(), error.getDefaultMessage()));
-
-            return new ResponseEntity<>(validaciones, HttpStatus.BAD_REQUEST);
-        }
-       /* if (pelicula.getTitulo() == null || pelicula.getTitulo().isBlank()) {
-
-            response.put("succes", Boolean.FALSE);
-            response.put("mensaje", "No es posible crear una pelicula sin titulo");
-
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }*/
-
-        /*if (this.peliculaService.save(pelicula) == null) {
-            response.put("succes", Boolean.FALSE);
-            response.put("mensaje", "La pelicula " + pelicula.getTitulo() + " ya existe");
-
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }*/
         try {
             this.peliculaService.save(pelicula);
         } catch (ObjectAlreadyExistException e) {
@@ -131,34 +109,10 @@ public class PeliculaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePelicula(@PathVariable Long id,
-                                            @Valid @RequestBody PeliculaDTO pelicula, BindingResult result) {
+                                            @Valid @RequestBody PeliculaDTO pelicula) {
 
         Map<String, Object> response = new HashMap<>();
 
-        Map<String, Object> validaciones = new HashMap<>();
-        if (result.hasErrors()) {
-            result.getFieldErrors()
-                    .forEach(error -> validaciones.put(error.getField(), error.getDefaultMessage()));
-
-            return new ResponseEntity<>(validaciones, HttpStatus.BAD_REQUEST);
-        }
-
-        /*if (this.peliculaService.findById(id) == null) {
-
-            response.put("succes", Boolean.FALSE);
-            response.put("mensaje", "Error: no se pudo editar, la película ID: "
-                    .concat(id.toString().concat(" no existe.")));
-
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }*/
-
-        /*if (pelicula.getTitulo() == null || pelicula.getTitulo().isBlank()) {
-
-            response.put("succes", Boolean.FALSE);
-            response.put("mensaje", "El campo titulo no puede estar vacío");
-
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }*/
         try {
             this.peliculaService.update(id, pelicula);
         } catch (IdNotFoundException e) {

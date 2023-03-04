@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -56,17 +55,9 @@ public class PersonajeController {
     }
 
     @PostMapping
-    public ResponseEntity<?> savePersonaje(@Valid @RequestBody PersonajeDTO personaje, BindingResult result) {
+    public ResponseEntity<?> savePersonaje(@Valid @RequestBody PersonajeDTO personaje) {
 
         Map<String, Object> response = new HashMap<>();
-
-        Map<String, Object> validaciones = new HashMap<>();
-        if(result.hasErrors()){
-            result.getFieldErrors()
-                    .forEach(error -> validaciones.put(error.getField(), error.getDefaultMessage()));
-
-            return new ResponseEntity<>(validaciones, HttpStatus.BAD_REQUEST);
-        }
 
         try {
             this.service.save(personaje);
@@ -86,17 +77,9 @@ public class PersonajeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePersonaje(@PathVariable Long id,
-                                             @Valid @RequestBody PersonajeDTO personaje, BindingResult result) {
+                                             @Valid @RequestBody PersonajeDTO personaje) {
 
         Map<String, Object> response = new HashMap<>();
-
-        Map<String, Object> validaciones = new HashMap<>();
-        if(result.hasErrors()){
-            result.getFieldErrors()
-                    .forEach(error -> validaciones.put(error.getField(), error.getDefaultMessage()));
-
-            return new ResponseEntity<>(validaciones, HttpStatus.BAD_REQUEST);
-        }
 
         try {
             this.service.update(id, personaje);

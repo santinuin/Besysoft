@@ -3,6 +3,7 @@ package com.besysoft.ejerciciounidad6.services.implementations;
 import com.besysoft.ejerciciounidad6.domain.entity.Personaje;
 import com.besysoft.ejerciciounidad6.dto.PersonajeDTO;
 import com.besysoft.ejerciciounidad6.dto.mapper.PersonajeMapper;
+import com.besysoft.ejerciciounidad6.excepciones.IdNotFoundException;
 import com.besysoft.ejerciciounidad6.repositories.database.PeliculaRepository;
 import com.besysoft.ejerciciounidad6.repositories.database.PersonajeRepository;
 import com.besysoft.ejerciciounidad6.services.interfaces.PersonajeService;
@@ -105,7 +106,7 @@ class PersonajeServiceImplTest {
 
     @Test
     @DisplayName("Buscar personaje por id")
-    void findById() {
+    void findById() throws IdNotFoundException {
 
         Long id = 1L;
         when(repository.findById(id)).thenReturn(Optional.of(PERSONAJE_1));
@@ -144,7 +145,7 @@ class PersonajeServiceImplTest {
 
     @Test
     @DisplayName("Modificar personaje")
-    void update() {
+    void update() throws IdNotFoundException {
         Long id = 1L;
         PersonajeDTO personajeDTO = new PersonajeDTO(1l, "Luke", 20, 72, "historia", null);
         PERSONAJE_1.setNombre(personajeDTO.getNombre());

@@ -6,6 +6,7 @@ import com.besysoft.ejerciciounidad6.dto.GeneroDTO;
 import com.besysoft.ejerciciounidad6.dto.PeliculaDTO;
 import com.besysoft.ejerciciounidad6.dto.mapper.GeneroMapper;
 import com.besysoft.ejerciciounidad6.dto.mapper.PeliculaMapper;
+import com.besysoft.ejerciciounidad6.excepciones.IdNotFoundException;
 import com.besysoft.ejerciciounidad6.repositories.database.GeneroRepository;
 import com.besysoft.ejerciciounidad6.repositories.database.PeliculaRepository;
 import com.besysoft.ejerciciounidad6.services.interfaces.GeneroService;
@@ -76,7 +77,12 @@ class GeneroServiceImplTest {
     void findById() {
         when(repository.findById(1L)).thenReturn(Optional.of(GENERO_1));
 
-        GeneroDTO result = service.findById(1L);
+        GeneroDTO result = null;
+        try {
+            result = service.findById(1L);
+        } catch (IdNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         assertEquals(GENERO_DTO_1, result);
     }
@@ -128,7 +134,12 @@ class GeneroServiceImplTest {
         when(peliculaRepository.findByTituloInIgnoreCase(peliculaNombres)).thenReturn(peliculaList);
         when(repository.save(GENERO_2)).thenReturn(GENERO_2);
 
-        Genero result = service.update(id, genero);
+        Genero result = null;
+        try {
+            result = service.update(id, genero);
+        } catch (IdNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         assertNotNull(result);
         assertEquals(GENERO_2.getNombre(), result.getNombre());
