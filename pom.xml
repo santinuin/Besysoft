@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.besysoft</groupId>
-	<artifactId>ejercicio-unidad-6</artifactId>
+	<artifactId>peliculas-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Ejercicio Unidad 1</name>
 	<description>Demo project for Spring Boot</description>
